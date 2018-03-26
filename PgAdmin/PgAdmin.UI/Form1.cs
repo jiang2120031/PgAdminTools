@@ -16,9 +16,5 @@ namespace PgAdmin.UI
         {
             InitializeComponent();
         }
-
-        private void Test()
-        {
-        }
     }
 }
