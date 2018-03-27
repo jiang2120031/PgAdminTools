@@ -34,6 +34,9 @@
       <HintPath>..\packages\NLog.4.4.13\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\Package\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="FindDbAndTables.cs" />
+    <Compile Include="Model\DbName.cs" />
+    <Compile Include="Model\TableName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
