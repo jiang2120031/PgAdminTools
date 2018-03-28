@@ -39,6 +39,8 @@ namespace PgAdmin.UI
         public void UpdateDetailTable()
         {
             detailForm.DetailDataTable = menuTreeForm.DetailDataTable;
+            detailForm.DataName = menuTreeForm.DataName;
+            detailForm.TableName = menuTreeForm.TableName;
         }
 
         DetailForm detailForm = new DetailForm();

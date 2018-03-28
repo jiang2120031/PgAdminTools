@@ -48,7 +48,9 @@ namespace PgAdmin.UI
             }
         }
 
-      
+        public string DataName { get; set; }
+        public string TableName { get; set;}
+
 
         private DataSet GetDBDocuments(string sql, string database)
         {
@@ -97,6 +99,8 @@ namespace PgAdmin.UI
             if (treeView.SelectedNode != null && treeView.SelectedNode.Level == 1)
             {
                 detailDataTable = GetDetailDocuments(treeView.SelectedNode.Text, treeView.SelectedNode.Parent.Text);
+                DataName = treeView.SelectedNode.Parent.Text;
+                TableName = treeView.SelectedNode.Text;
                 updateTable();
             }
 

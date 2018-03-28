@@ -81,6 +81,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView;
+        public System.Windows.Forms.TreeView treeView;
     }
 }

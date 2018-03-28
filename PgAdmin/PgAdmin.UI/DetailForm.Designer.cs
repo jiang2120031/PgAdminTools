@@ -84,6 +84,7 @@
             this.idButton.TabIndex = 0;
             this.idButton.Text = "button1";
             this.idButton.UseVisualStyleBackColor = true;
+            this.idButton.Click += new System.EventHandler(this.idButton_Click);
             // 
             // vScrollBar
             // 
