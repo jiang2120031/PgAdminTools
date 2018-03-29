@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PgAdmin.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,6 +39,9 @@ namespace PgAdmin.UI
             }
         }
 
+
+        public string DataName { get; set; }
+        public string TableName { get; set; }
 
         public DataTable DetailDataTable
         {
@@ -94,8 +98,18 @@ namespace PgAdmin.UI
             }
         }
 
-        int maxRows = 100;
+        int maxRows = 30;
         PagerControl pagerControl1 = new PagerControl();
 
+        private void idButton_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(idTextBox.Text)&& !string.IsNullOrWhiteSpace(DataName) && !string.IsNullOrWhiteSpace(TableName))
+            {
+                ClientQueryService clientQueryService = new ClientQueryService();
+                var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName,TableName, CommandType.Text, null);
+                SearchResultForm searchResultForm = new SearchResultForm(result);
+                searchResultForm.ShowDialog();
+            }
+        }
     }
 }

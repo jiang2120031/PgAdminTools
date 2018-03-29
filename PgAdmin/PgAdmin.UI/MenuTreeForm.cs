@@ -39,9 +39,14 @@ namespace PgAdmin.UI
             }
         }
         
+
+        public string DataName { get; set; }
+        public string TableName { get; set;}
+
+
         private List<DbName> GetDBDocuments(string sql, string database)
         {
-            var dbConnStr = " Host=localhost;Database=" + database +
+            //var dbConnStr = " Host=localhost;Database=" + database +
                 ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
             var dbList = findDocuments.FindDbAndTables(dbConnStr, System.Data.CommandType.Text, sql).ToList();
             return dbList;
@@ -85,6 +90,8 @@ namespace PgAdmin.UI
             if (treeView.SelectedNode != null && treeView.SelectedNode.Level == 1)
             {
                 detailDataTable = GetDetailDocuments(treeView.SelectedNode.Text, treeView.SelectedNode.Parent.Text);
+                DataName = treeView.SelectedNode.Parent.Text;
+                TableName = treeView.SelectedNode.Text;
                 updateTable();
             }
 
