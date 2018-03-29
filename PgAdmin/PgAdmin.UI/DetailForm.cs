@@ -36,13 +36,31 @@ namespace PgAdmin.UI
 
         private void idButton_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(idTextBox.Text)&& !string.IsNullOrWhiteSpace(DataName) && !string.IsNullOrWhiteSpace(TableName))
+            try
             {
-                ClientQueryService clientQueryService = new ClientQueryService();
-                var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName,TableName, CommandType.Text, null);
-                SearchResultForm searchResultForm = new SearchResultForm(result);
-                searchResultForm.ShowDialog();
+                if (string.IsNullOrWhiteSpace(DataName) || string.IsNullOrWhiteSpace(TableName))
+                {
+                    MessageBox.Show("Please select a table", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (string.IsNullOrWhiteSpace(idTextBox.Text))
+                {
+                    MessageBox.Show("Please enter id", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                else
+                {
+                    ClientQueryService clientQueryService = new ClientQueryService();
+                    var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
+                        CommandType.Text, null);
+                    SearchResultForm searchResultForm = new SearchResultForm(result);
+                    searchResultForm.ShowDialog();
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show("error occoured when query data,please ensure you have selected the right table","error" ,MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }
