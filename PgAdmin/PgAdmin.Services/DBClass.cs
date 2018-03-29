@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace PgAdmin.UI
+namespace PgAdmin.Services
 {
-   public class DBClass
+    public  class DBClass
     {
         /// <summary>
         /// 执行查询，返回DataReader
         /// </summary>
-        public DbDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText,
+        public  DbDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText,
             params DbParameter[] cmdParms)
         {
             NpgsqlCommand cmd = new NpgsqlCommand();
@@ -38,7 +38,7 @@ namespace PgAdmin.UI
         /// <summary>
         /// 执行查询，返回DataSet
         /// </summary>
-        public DataSet ExecuteQuery(string connectionString, CommandType cmdType, string cmdText,
+        public  DataSet ExecuteQuery(string connectionString, CommandType cmdType, string cmdText,
             params DbParameter[] cmdParms)
         {
             using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
@@ -55,7 +55,7 @@ namespace PgAdmin.UI
                             cmd.Parameters.Clear();
                             return ds;
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         { return null; }
                     }
                 }
