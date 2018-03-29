@@ -46,7 +46,7 @@ namespace PgAdmin.UI
 
         private List<DbName> GetDBDocuments(string sql, string database)
         {
-            //var dbConnStr = " Host=localhost;Database=" + database +
+            var dbConnStr = " Host=localhost;Database=" + database +
                 ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
             var dbList = findDocuments.FindDbAndTables(dbConnStr, System.Data.CommandType.Text, sql).ToList();
             return dbList;
