@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PgAdmin.Services;
+using PgAdmin.Services.Model;
 
 namespace PgAdmin.UI
 {
@@ -22,7 +24,9 @@ namespace PgAdmin.UI
 
         DataTable detailDataTable;
         DBClass postgresHelper = new DBClass();
+        FindAllDbAndTables findDocuments = new FindAllDbAndTables();
         public UpdateDelegate updateTable;
+
         public DataTable DetailDataTable
         {
             get
@@ -34,65 +38,49 @@ namespace PgAdmin.UI
                 detailDataTable = value;
             }
         }
-        private List<DBDocuments> dbDocuments;
-        public List<DBDocuments> DBDocuments
+        
+        private List<DbName> GetDBDocuments(string sql, string database)
         {
-            get
-            {
-                return dbDocuments;
-            }
-            set
-            {
-                dbDocuments = value;
-                //InitMenuTree(dbDocuments);
-            }
+            var dbConnStr = " Host=localhost;Database=" + database +
+                ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
+            var dbList = findDocuments.FindDbAndTables(dbConnStr, System.Data.CommandType.Text, sql).ToList();
+            return dbList;
         }
 
-      
-
-        private DataSet GetDBDocuments(string sql, string database)
-        {
-            var dbConnStr = " Host=localhost;Database=" + database + ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
-            var dataSet = postgresHelper.ExecuteQuery(dbConnStr, System.Data.CommandType.Text, sql);
-            return dataSet;
-        }
         private DataTable GetDetailDocuments(string tablename, string database)
         {
             var sql = @"SELECT * FROM " + tablename;
-            var dbConnStr = " Host=localhost;Database=" + database + ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
-            var dataTable = postgresHelper.ExecuteReader(dbConnStr, System.Data.CommandType.Text, sql).GetSchemaTable();
+            var dbConnStr = " Host=localhost;Database=" + database +
+                ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
+            var dataTable = new DataTable();
+            dataTable.Load(postgresHelper.ExecuteReader(dbConnStr, System.Data.CommandType.Text, sql));
             return dataTable;
         }
-
-
-        private void InitMenuTree()//(List<DBDocuments> dbDocuments)
+        
+        private void InitMenuTree()
         {
             treeView.Nodes.Clear();
             var ds = GetDBDocuments(@"SELECT datname FROM pg_database", "postgres");
-            foreach (DataRow col in ds.Tables[0].Rows)
+            foreach (var item in ds)
             {
-                TreeNode mytreenode = new TreeNode();
-                mytreenode.Name = col["datname"].ToString();
-                mytreenode.Text = col["datname"].ToString();
-                if (!mytreenode.Text.Contains("template"))
+                if (!item.DName.Contains("template"))
                 {
-                    var dschild = GetDBDocuments(@"SELECT tablename FROM pg_tables", mytreenode.Text);
-                    if (dschild != null)
-                    {
-                        foreach (DataRow colchild in dschild.Tables[0].Rows)
-                        {
-                            TreeNode childnode = new TreeNode();
-                            childnode.Name = colchild["tablename"].ToString();
-                            childnode.Text = colchild["tablename"].ToString();
-                            mytreenode.Nodes.Add(childnode);
-                        }
-                    }
-                }
-                treeView.Nodes.Add(mytreenode);
-            }
+                    TreeNode mytreenode = new TreeNode();
+                    mytreenode.Text = item.DName;
 
+                    foreach (var itemchild in item.TName)
+                    {
+                        TreeNode childnode = new TreeNode();
+                        childnode.Text = itemchild.TName;
+                        mytreenode.Nodes.Add(childnode);
+                    }
+
+                    treeView.Nodes.Add(mytreenode);
+                }
+            }
         }
-         private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
+
+        private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (treeView.SelectedNode != null && treeView.SelectedNode.Level == 1)
             {
