@@ -50,18 +50,7 @@ namespace PgAdmin.UI
             //tb.SelectionColor = Color.Black;
             tb.SelectionBackColor = Color.Transparent;
         }
-
-        private void ColorKeyWord(System.Windows.Forms.RichTextBox tb, string word, string keyword)
-        {
-            if (word.Contains(keyword) || word == keyword)
-            {
-                var index = tb.Text.IndexOf(word) + word.Length;
-                MySelect(tb, index, keyword, Color.Black);
-            }
-
-        }
-
-
+        
         private void ColorDefault(System.Windows.Forms.RichTextBox tb)
         {
             tb.Font = new Font("宋体", 12, (FontStyle.Regular));
@@ -83,14 +72,6 @@ namespace PgAdmin.UI
                     MySelect(jsonTextBox, Match.Index, searchText.Text, Color.CadetBlue);
                  
                 }
-                
-                //string[] words = jsonTextBox.Text.Split(new char[] { ' ', '.', '\n', '(', ')', '}', '{', '"', '[', ']' });
-                //for (int i = 0; i < words.Length; i++)
-                //{
-                //    ColorKeyWord(jsonTextBox, words[i], searchText.Text);
-                   
-                //}
-
             }
 
         }
