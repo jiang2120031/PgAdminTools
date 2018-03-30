@@ -132,8 +132,8 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(65, 34);
-            this.toolStripLabel1.Text = "  Page Size:";
+            this.toolStripLabel1.Size = new System.Drawing.Size(102, 34);
+            this.toolStripLabel1.Text = "  CurrentPageSize:";
             // 
             // pageSizeText
             // 
@@ -176,7 +176,7 @@
             this.pageToolStripText.Name = "pageToolStripText";
             this.pageToolStripText.Size = new System.Drawing.Size(50, 23);
             this.pageToolStripText.Text = "0";
-            this.pageToolStripText.ToolTipText = "Current position";
+            this.pageToolStripText.ToolTipText = "Current position\r\n";
             this.pageToolStripText.TextChanged += new System.EventHandler(this.bindingNavigatorPositionItem_TextChanged);
             // 
             // bindingNavigatorSeparator1
@@ -199,7 +199,7 @@
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 34);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 20);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
             // bindingNavigatorSeparator2
@@ -240,8 +240,9 @@
             this.idButton.Name = "idButton";
             this.idButton.Size = new System.Drawing.Size(75, 23);
             this.idButton.TabIndex = 3;
-            this.idButton.Text = "button1";
+            this.idButton.Text = "Search";
             this.idButton.UseVisualStyleBackColor = true;
+            this.idButton.Click += new System.EventHandler(this.idButton_Click);
             // 
             // DetailForm
             // 

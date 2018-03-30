@@ -37,30 +37,26 @@ namespace PgAdmin.UI
                 this.Text = value;
             }
         }
-        public static void MySelect(System.Windows.Forms.RichTextBox tb, int i, string s, Color c, bool font)
+        public static void MySelect(System.Windows.Forms.RichTextBox tb, int i, string s, Color c)
         {
-            tb.Select(i - s.Length, s.Length);
-            tb.SelectionColor = c;
+            tb.Select(i , s.Length);
+            //tb.SelectionColor = c;
+            tb.SelectionFont = new Font("宋体", 14, (FontStyle.Bold));
+            tb.SelectionBackColor = c;//Color.Blue;
 
-            if (font)
-            {
-                tb.SelectionFont = new Font("宋体", 12, (FontStyle.Bold));
-                tb.SelectionBackColor = Color.Red;
-            }
 
-            //以下是把光标放到原来位置，并把光标后输入的文字重置
-            tb.Select(i, 0);
+            tb.Select(i+s.Length, 0);
             tb.SelectionFont = new Font("宋体", 12, (FontStyle.Regular));
-            tb.SelectionColor = Color.Black;
+            //tb.SelectionColor = Color.Black;
             tb.SelectionBackColor = Color.Transparent;
         }
 
-        private void ColorKeyWord(System.Windows.Forms.RichTextBox tb, string word, string keyword) //判断字符串是否为关键字  
+        private void ColorKeyWord(System.Windows.Forms.RichTextBox tb, string word, string keyword)
         {
-            if (word.Contains(keyword))
+            if (word.Contains(keyword) || word == keyword)
             {
                 var index = tb.Text.IndexOf(word) + word.Length;
-                MySelect(tb, index, keyword, Color.Blue, true);
+                MySelect(tb, index, keyword, Color.Black);
             }
 
         }
@@ -69,7 +65,7 @@ namespace PgAdmin.UI
         private void ColorDefault(System.Windows.Forms.RichTextBox tb)
         {
             tb.Font = new Font("宋体", 12, (FontStyle.Regular));
-
+            tb.SelectionBackColor = Color.Transparent;
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -77,11 +73,23 @@ namespace PgAdmin.UI
             if (!String.IsNullOrEmpty(searchText.Text))
             {
                 ColorDefault(jsonTextBox);
-                string[] words = jsonTextBox.Text.Split(new char[] { ' ', '.', '\n', '(', ')', '}', '{', '"', '[', ']' });
-                for (int i = 0; i < words.Length; i++)//一个字符段一个字符段来判断  
+                Regex r = new Regex(searchText.Text);
+                Match m = r.Match(jsonTextBox.Text);
+                var gc = m.Groups;
+
+                MatchCollection Matches = Regex.Matches(jsonTextBox.Text, searchText.Text);
+                foreach (Match Match in Matches)
                 {
-                    ColorKeyWord(jsonTextBox, words[i], searchText.Text);
+                    MySelect(jsonTextBox, Match.Index, searchText.Text, Color.CadetBlue);
+                 
                 }
+                
+                //string[] words = jsonTextBox.Text.Split(new char[] { ' ', '.', '\n', '(', ')', '}', '{', '"', '[', ']' });
+                //for (int i = 0; i < words.Length; i++)
+                //{
+                //    ColorKeyWord(jsonTextBox, words[i], searchText.Text);
+                   
+                //}
 
             }
 

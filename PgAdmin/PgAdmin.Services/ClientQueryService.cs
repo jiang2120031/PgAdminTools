@@ -24,9 +24,28 @@ namespace PgAdmin.Services
             return getInfoByIdModel;
         }
 
-        /// <summary>
-        /// 执行查询，返回DataSet
-        /// </summary>
+   
+        public DbDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText,
+            params DbParameter[] cmdParms)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand();
+            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+
+            try
+            {
+                PrepareCommand(cmd, conn, null, cmdType, cmdText, cmdParms);
+                NpgsqlDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                cmd.Parameters.Clear();
+                return rdr;
+            }
+            catch
+            {
+                conn.Close();
+                throw;
+            }
+        }
+      
+
         public DataSet ExecuteQuery(string connectionString, CommandType cmdType, string cmdText,
             params DbParameter[] cmdParms)
         {
@@ -37,18 +56,21 @@ namespace PgAdmin.Services
                     PrepareCommand(cmd, conn, null, cmdType, cmdText, cmdParms);
                     using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd))
                     {
-                        DataSet ds = new DataSet();
-                        da.Fill(ds, "ds");
-                        cmd.Parameters.Clear();
-                        return ds;
+                        try
+                        {
+                            DataSet ds = new DataSet();
+                            da.Fill(ds, "ds");
+                            cmd.Parameters.Clear();
+                            return ds;
+                        }
+                        catch (Exception e)
+                        { return null; }
                     }
                 }
             }
         }
-        /// <summary>
-        /// 生成要执行的命令
-        /// </summary>
-        /// <remarks>参数的格式：冒号+参数名</remarks>
+      
+
         private static void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, CommandType cmdType,
             string cmdText, DbParameter[] cmdParms)
         {

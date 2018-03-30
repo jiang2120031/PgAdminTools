@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBClass.cs" />
     <Compile Include="FindDbAndTables.cs" />
     <Compile Include="ClientQueryService.cs" />
     <Compile Include="Model\DbName.cs" />

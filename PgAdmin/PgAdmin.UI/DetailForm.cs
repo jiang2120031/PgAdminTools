@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace PgAdmin.UI
 {
@@ -18,6 +19,7 @@ namespace PgAdmin.UI
         public DetailForm()
         {
             InitializeComponent();
+            bindingNavigator1.Enabled = false;
             //pageSearchPanel.Controls.Add(pagerControl1);
             //pagerControl1.Dock = DockStyle.Bottom;           
             //pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
@@ -64,6 +66,8 @@ namespace PgAdmin.UI
 
         private void InitDataSet()
         {
+            bindingNavigator1.Enabled = true;
+            pageToolStripText.Enabled = true;
             nMax = dt.Rows.Count;
             pageCount = (nMax / pageSize);
             if ((nMax % pageSize) > 0) pageCount++;
@@ -73,16 +77,9 @@ namespace PgAdmin.UI
             pageSizeText.Text = pageSize.ToString();
             totalCountLabel.Visible = true;
             totalCountLabel.Text = "/" + pageCount.ToString();
-
         }
-        private void LoadData()
+        private void SetButton()
         {
-            int nStartPos = 0;
-            int nEndPos = 0;
-
-            DataTable dtTemp = dt.Clone();
-
-            #region set button
             if (pageCurrent <= 1)
             {
                 bindingNavigatorMoveFirstItem.Enabled = false;
@@ -105,7 +102,15 @@ namespace PgAdmin.UI
                 bindingNavigatorMoveNextItem.Enabled = true;
                 bindingNavigatorMoveLastItem.Enabled = true;
             }
-            #endregion
+        }
+        private void LoadData()
+        {
+            int nStartPos = 0;
+            int nEndPos = 0;
+
+            DataTable dtTemp = dt.Clone();
+
+            SetButton();
 
             if (pageCurrent == pageCount)
             {
@@ -132,12 +137,8 @@ namespace PgAdmin.UI
                 nCurrent++;
             }
 
-
             bindingSource1.DataSource = dtTemp;
-            bindingNavigator1.BindingSource = bindingSource1;
             dataGridView.DataSource = bindingSource1;
-
-
         }
 
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -175,23 +176,27 @@ namespace PgAdmin.UI
                 {
                     ClientQueryService clientQueryService = new ClientQueryService();
                     var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
-                        CommandType.Text, null);
-                    SearchResultForm searchResultForm = new SearchResultForm(result);
-                    searchResultForm.ShowDialog();
+                        CommandType.Text, null).Data;
+                    JObject jo = (JObject)JsonConvert.DeserializeObject(result);
+                    JsonForm jsonForm = new JsonForm();
+                    jsonForm.JsonData = jo;
+                    jsonForm.Title = idTextBox.Text;
+                    jsonForm.StartPosition = FormStartPosition.CenterScreen;
+                    jsonForm.Show();
+                    jsonForm.Focus();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("error occoured when query data,please ensure you have selected the right table","error" ,MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }           
+                MessageBox.Show("error occoured when query data,please ensure you have selected the right table", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
 
         private void pageSizeText_TextChanged(object sender, EventArgs e)
         {
-            int num = 0;
-            //输入不符合规范时，默认设置为100  
+            int num = 0;          
             if (!int.TryParse(pageSizeText.Text.Trim(), out num) || num <= 0)
             {
                 num = 25;
@@ -213,7 +218,7 @@ namespace PgAdmin.UI
                 case "Move previous":
                     if (pageCurrent == 1)
                     {
-                        //MessageBox.Show("已经是第一页，请点击“下一页”查看!");
+                        MessageBox.Show("This is the first!");
                         return;
                     }
                     else
@@ -226,9 +231,7 @@ namespace PgAdmin.UI
                 case "Move next":
                     if (pageCurrent == pageCount)
                     {
-                        //bindingNavigator1.PositionItem.Text = pageCurrent.ToString();
-                        //bindingNavigatorPositionItem.Text= pageCurrent.ToString();
-                        //MessageBox.Show("已经是最后一页，请点击“上一页”查看!");
+                        MessageBox.Show("This is the last!");
                         return;
                     }
                     else
@@ -248,33 +251,51 @@ namespace PgAdmin.UI
 
         }
 
+        private void bindingNavigatorPositionItem_TextChanged(object sender, EventArgs e)
+        {
+            if (IsInt(pageToolStripText.Text))
+            {
+                var index = int.Parse(pageToolStripText.Text);
+
+                if (index > pageCount)
+                {
+                    pageToolStripText.Text = pageCurrent.ToString();
+                    MessageBox.Show("Out of range!");
+                    return;
+                }
+                else
+                {
+                    pageCurrent = index;
+                    nCurrent = pageSize * (pageCurrent - 1);
+                    LoadData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid input!");
+                return;
+            }
+
+
+        }
+
+        public static bool IsInt(string strNumber)
+        {
+            Regex objNotNumberPattern = new Regex("[^0-9]");
+            Regex objTwoMinusPattern = new Regex("[0-9]*[-][0-9]*[-][0-9]*");
+            const string strValidIntegerPattern = "^([-]|[0-9])[0-9]*$";
+            Regex objNumberPattern = new Regex("(" + strValidIntegerPattern + ")");
+            return !objNotNumberPattern.IsMatch(strNumber) &&
+             !objTwoMinusPattern.IsMatch(strNumber) &&
+             objNumberPattern.IsMatch(strNumber);
+        }
+
+
         int pageSize = 25;
         int pageCurrent = 1; //当前页数从1开始
         int nCurrent = 0; //当前记录数从0开始
         int pageCount = 0;
         int nMax = 0;
 
-        private void bindingNavigatorPositionItem_TextChanged(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    var index = int.Parse(pageToolStripText.Text);
-            //    if (index > pageCount)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        bindingNavigator1.PositionItem.Text = pageCurrent.ToString();
-            //        pageCurrent = index;
-            //        nCurrent = pageSize * (pageCurrent - 1);
-            //        LoadData();
-            //    }
-            //}
-            //catch (Exception er)
-            //{
-            //    InitDataSet();
-            //}
-        }
     }
 }

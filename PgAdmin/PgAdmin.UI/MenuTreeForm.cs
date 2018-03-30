@@ -23,7 +23,7 @@ namespace PgAdmin.UI
         }
 
         DataTable detailDataTable;
-        DBClass postgresHelper = new DBClass();
+        ClientQueryService postgresHelper = new ClientQueryService();
         FindAllDbAndTables findDocuments = new FindAllDbAndTables();
         public UpdateDelegate updateTable;
 

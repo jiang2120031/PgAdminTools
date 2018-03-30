@@ -44,7 +44,7 @@ namespace PgAdmin.Services
             return dbNameS;
         }
 
-        DBClass postgresHelper = new DBClass();
+        ClientQueryService postgresHelper = new ClientQueryService();
 
     }
 }
