@@ -277,6 +277,7 @@
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.searchPanel);
             this.ForeColor = System.Drawing.SystemColors.Control;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "DetailForm";
             this.Text = "Detail";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

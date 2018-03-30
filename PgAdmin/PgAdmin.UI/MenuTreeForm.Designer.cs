@@ -76,6 +76,7 @@
             this.ClientSize = new System.Drawing.Size(170, 546);
             this.ControlBox = false;
             this.Controls.Add(this.treeView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "MenuTreeForm";
             this.ShowIcon = false;
             this.Text = "DataBase";

@@ -28,12 +28,12 @@ namespace PgAdmin.UI
             MenuPanel.Controls.Add(menuTreeForm);
             menuTreeForm.Show();
             menuTreeForm.Dock = DockStyle.Fill;
-            menuTreeForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            menuTreeForm.FormBorderStyle = FormBorderStyle.None;
             detailForm.TopLevel = false;
             tablePanel.Controls.Add(detailForm);
             detailForm.Show();
             detailForm.Dock = DockStyle.Fill;
-            detailForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            detailForm.FormBorderStyle = FormBorderStyle.None;
         }
 
         public void UpdateDetailTable()

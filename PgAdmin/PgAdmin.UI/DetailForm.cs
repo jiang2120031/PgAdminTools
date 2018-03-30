@@ -54,7 +54,7 @@ namespace PgAdmin.UI
             set
             {
                 dt = value;
-                if (dt != null&&dt.Rows.Count>0)
+                if (dt != null && dt.Rows.Count > 0)
                     InitDataSet();
                 GridLayoutResize();
             }
@@ -110,7 +110,7 @@ namespace PgAdmin.UI
             int nStartPos = 0;
             int nEndPos = 0;
 
-            DataTable dtTemp = dt.Clone();
+            dtTemp = dt.Clone();
 
             SetButton();
 
@@ -141,16 +141,17 @@ namespace PgAdmin.UI
 
             bindingSource1.DataSource = dtTemp;
             dataGridView.DataSource = bindingSource1;
+            AddExportButton();
         }
 
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (dataGridView.Rows[e.RowIndex].Cells.Count > 2 && dataGridView.Columns.Contains("data"))
+            if (e.RowIndex >= 0 && dataGridView.Rows[e.RowIndex].Cells.Count > 2 && ContainsColumn("data"))
             {
-                var title = dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                var title = dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
                 if (!String.IsNullOrEmpty(title))
                 {
-                    JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
+                    JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString());
                     JsonForm jsonForm = new JsonForm();
                     jsonForm.JsonData = jo;
                     jsonForm.Title = title;
@@ -160,6 +161,30 @@ namespace PgAdmin.UI
                 }
             }
         }
+        private void AddExportButton()
+        {
+            
+            if (!ContainsColumn("Export"))
+            {
+                DataGridViewButtonColumn Column1 = new DataGridViewButtonColumn();
+                Column1.HeaderText = "Export";
+                Column1.UseColumnTextForButtonValue=true;
+                Column1.Text = "Export";
+                this.dataGridView.Columns.Add(Column1);
+            }
+          
+            
+        }
+        private bool ContainsColumn(string containsValue)
+        {
+            foreach (DataGridViewColumn item in dataGridView.Columns)
+            {
+                Regex headerValue = new Regex(containsValue);
+                if (headerValue.IsMatch(item.HeaderText))
+                    return true;
+            }
+            return false;
+        } 
 
         private void idButton_Click(object sender, EventArgs e)
         {
@@ -198,7 +223,7 @@ namespace PgAdmin.UI
 
         private void pageSizeText_TextChanged(object sender, EventArgs e)
         {
-            int num = 0;          
+            int num = 0;
             if (!int.TryParse(pageSizeText.Text.Trim(), out num) || num <= 0)
             {
                 num = 25;
@@ -298,6 +323,7 @@ namespace PgAdmin.UI
         int nCurrent = 0; //当前记录数从0开始
         int pageCount = 0;
         int nMax = 0;
+        DataTable dtTemp;
 
     }
 }
