@@ -39,9 +39,11 @@
             // 
             // JsonPanel
             // 
+            this.JsonPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.JsonPanel.Controls.Add(this.jsonTextBox);
             this.JsonPanel.Controls.Add(this.searchPanel);
             this.JsonPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JsonPanel.ForeColor = System.Drawing.SystemColors.Control;
             this.JsonPanel.Location = new System.Drawing.Point(0, 0);
             this.JsonPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.JsonPanel.Name = "JsonPanel";
@@ -50,8 +52,10 @@
             // 
             // jsonTextBox
             // 
+            this.jsonTextBox.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.jsonTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.jsonTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jsonTextBox.ForeColor = System.Drawing.SystemColors.Control;
             this.jsonTextBox.Location = new System.Drawing.Point(0, 64);
             this.jsonTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.jsonTextBox.Name = "jsonTextBox";
@@ -61,6 +65,7 @@
             // 
             // searchPanel
             // 
+            this.searchPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.searchPanel.Controls.Add(this.searchButton);
             this.searchPanel.Controls.Add(this.searchText);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -72,6 +77,7 @@
             // 
             // searchButton
             // 
+            this.searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchButton.Location = new System.Drawing.Point(381, 20);
             this.searchButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

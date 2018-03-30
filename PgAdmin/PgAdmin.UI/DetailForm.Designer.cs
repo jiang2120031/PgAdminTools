@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetailForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.searchPanel = new System.Windows.Forms.Panel();
@@ -63,7 +64,16 @@
             // dataGridView
             // 
             this.dataGridView.AllowUserToOrderColumns = true;
+            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 37);
             this.dataGridView.Name = "dataGridView";
@@ -73,6 +83,7 @@
             // 
             // searchPanel
             // 
+            this.searchPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.searchPanel.Controls.Add(this.pageSearchPanel);
             this.searchPanel.Controls.Add(this.searchByIDpPanel);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -93,6 +104,7 @@
             // bindingNavigator1
             // 
             this.bindingNavigator1.AddNewItem = null;
+            this.bindingNavigator1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigator1.CountItem = this.totalCountLabel;
             this.bindingNavigator1.CountItemFormat = "/{0}";
             this.bindingNavigator1.DeleteItem = null;
@@ -124,6 +136,7 @@
             // 
             // totalCountLabel
             // 
+            this.totalCountLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.totalCountLabel.Name = "totalCountLabel";
             this.totalCountLabel.Size = new System.Drawing.Size(26, 34);
             this.totalCountLabel.Text = "/{0}";
@@ -131,6 +144,8 @@
             // 
             // toolStripLabel1
             // 
+            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.toolStripLabel1.ForeColor = System.Drawing.SystemColors.Control;
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(102, 34);
             this.toolStripLabel1.Text = "  CurrentPageSize:";
@@ -148,6 +163,7 @@
             // 
             // bindingNavigatorMoveFirstItem
             // 
+            this.bindingNavigatorMoveFirstItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
@@ -157,6 +173,7 @@
             // 
             // bindingNavigatorMovePreviousItem
             // 
+            this.bindingNavigatorMovePreviousItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
@@ -186,6 +203,7 @@
             // 
             // bindingNavigatorMoveNextItem
             // 
+            this.bindingNavigatorMoveNextItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
@@ -195,7 +213,9 @@
             // 
             // bindingNavigatorMoveLastItem
             // 
+            this.bindingNavigatorMoveLastItem.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveLastItem.ForeColor = System.Drawing.SystemColors.Control;
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
@@ -228,6 +248,7 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
+            this.idLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.idLabel.Location = new System.Drawing.Point(2, 12);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(21, 13);
@@ -236,6 +257,8 @@
             // 
             // idButton
             // 
+            this.idButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.idButton.ForeColor = System.Drawing.SystemColors.Control;
             this.idButton.Location = new System.Drawing.Point(278, 6);
             this.idButton.Name = "idButton";
             this.idButton.Size = new System.Drawing.Size(75, 23);
@@ -248,10 +271,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(850, 512);
             this.ControlBox = false;
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.searchPanel);
+            this.ForeColor = System.Drawing.SystemColors.Control;
             this.Name = "DetailForm";
             this.Text = "Detail";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

@@ -44,7 +44,11 @@
             // 
             // treeView
             // 
+            this.treeView.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeView.ForeColor = System.Drawing.SystemColors.Control;
+            this.treeView.LabelEdit = true;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
             treeNode1.Name = "Node4";

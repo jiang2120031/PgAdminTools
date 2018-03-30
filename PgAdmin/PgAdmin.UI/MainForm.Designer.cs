@@ -34,18 +34,22 @@
             // 
             // MenuPanel
             // 
+            this.MenuPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.MenuPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MenuPanel.ForeColor = System.Drawing.SystemColors.Control;
             this.MenuPanel.Location = new System.Drawing.Point(0, 0);
             this.MenuPanel.Name = "MenuPanel";
-            this.MenuPanel.Size = new System.Drawing.Size(200, 862);
+            this.MenuPanel.Size = new System.Drawing.Size(240, 862);
             this.MenuPanel.TabIndex = 0;
             // 
             // tablePanel
             // 
+            this.tablePanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.tablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablePanel.Location = new System.Drawing.Point(200, 0);
+            this.tablePanel.ForeColor = System.Drawing.SystemColors.Control;
+            this.tablePanel.Location = new System.Drawing.Point(240, 0);
             this.tablePanel.Name = "tablePanel";
-            this.tablePanel.Size = new System.Drawing.Size(809, 862);
+            this.tablePanel.Size = new System.Drawing.Size(769, 862);
             this.tablePanel.TabIndex = 5;
             // 
             // MainForm

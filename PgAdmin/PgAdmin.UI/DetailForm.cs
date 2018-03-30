@@ -29,6 +29,8 @@ namespace PgAdmin.UI
         {
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.Height = this.Height - searchPanel.Height;
+            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            dataGridView.ColumnHeadersHeight = dataGridView.Height / 20;
             for (int i = 0; i < dataGridView.Columns.Count; i++)
             {
                 dataGridView.Columns[i].Width = dataGridView.Width / dataGridView.Columns.Count;
@@ -52,7 +54,7 @@ namespace PgAdmin.UI
             set
             {
                 dt = value;
-                if (dt != null)
+                if (dt != null&&dt.Rows.Count>0)
                     InitDataSet();
                 GridLayoutResize();
             }

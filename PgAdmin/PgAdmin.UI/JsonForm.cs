@@ -41,19 +41,19 @@ namespace PgAdmin.UI
         {
             tb.Select(i , s.Length);
             //tb.SelectionColor = c;
-            tb.SelectionFont = new Font("宋体", 14, (FontStyle.Bold));
+            tb.SelectionFont = new Font("Microsoft Sans Serif", 14, (FontStyle.Bold));
             tb.SelectionBackColor = c;//Color.Blue;
 
 
             tb.Select(i+s.Length, 0);
-            tb.SelectionFont = new Font("宋体", 12, (FontStyle.Regular));
+            tb.SelectionFont = new Font("Microsoft Sans Serif", 12, (FontStyle.Regular));
             //tb.SelectionColor = Color.Black;
             tb.SelectionBackColor = Color.Transparent;
         }
         
         private void ColorDefault(System.Windows.Forms.RichTextBox tb)
         {
-            tb.Font = new Font("宋体", 12, (FontStyle.Regular));
+            tb.Font = new Font("Microsoft Sans Serif", 12, (FontStyle.Regular));
             tb.SelectionBackColor = Color.Transparent;
         }
 
