@@ -18,11 +18,9 @@ namespace PgAdmin.UI
         public DetailForm()
         {
             InitializeComponent();
-            searchPanel.Controls.Add(pagerControl1);
-            pagerControl1.Dock = DockStyle.Right;
-            //激活OnPageChanged事件  
-            
-            pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
+            //pageSearchPanel.Controls.Add(pagerControl1);
+            //pagerControl1.Dock = DockStyle.Bottom;           
+            //pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
         }
 
         private void GridLayoutResize()
@@ -35,49 +33,111 @@ namespace PgAdmin.UI
             }
             for (int i = 0; i < dataGridView.Rows.Count; i++)
             {
-                dataGridView.Rows[i].Height = (dataGridView.Height - dataGridView.ColumnHeadersHeight - SystemInformation.HorizontalScrollBarHeight) / maxRows;
+                dataGridView.Rows[i].Height = (dataGridView.Height - dataGridView.ColumnHeadersHeight - SystemInformation.HorizontalScrollBarHeight) / pageSize;
             }
         }
 
 
         public string DataName { get; set; }
         public string TableName { get; set; }
-
+        DataTable dt;
         public DataTable DetailDataTable
         {
             get
             {
-                return (DataTable)dataGridView.DataSource;
+                return dt;
             }
             set
             {
-                dataGridView.DataSource = null;
-                dataGridView.DataSource = value;
+                dt = value;
+                if (dt != null)
+                    InitDataSet();
                 GridLayoutResize();
             }
         }
 
-        /// <summary>  
-        /// 页数变化时调用绑定数据方法  
-        /// </summary>  
-        /// <param name="sender"></param>  
-        /// <param name="e"></param>  
+
         private void pagerControl1_OnPageChanged(object sender, EventArgs e)
         {
             LoadData();
         }
 
-        /// <summary>  
-        /// 重新加载数据  
-        /// </summary>  
+        private void InitDataSet()
+        {
+            nMax = dt.Rows.Count;
+            pageCount = (nMax / pageSize);
+            if ((nMax % pageSize) > 0) pageCount++;
+            pageCurrent = 1;
+            nCurrent = 0;
+            LoadData();
+            pageSizeText.Text = pageSize.ToString();
+            totalCountLabel.Visible = true;
+            totalCountLabel.Text = "/" + pageCount.ToString();
+
+        }
         private void LoadData()
         {
-            int count;
-            //using (MAction action = new MAction("Users.txt", "Txt Path={0}"))
-            //{
-            //    action.Select(pagerControl1.PageIndex, pagerControl1.PageSize, string.Empty, out count).Bind(gvUsers);
-            //    pagerControl1.DrawControl(count);
-            //}
+            int nStartPos = 0;
+            int nEndPos = 0;
+
+            DataTable dtTemp = dt.Clone();
+
+            #region set button
+            if (pageCurrent <= 1)
+            {
+                bindingNavigatorMoveFirstItem.Enabled = false;
+                bindingNavigatorMovePreviousItem.Enabled = false;
+            }
+            else
+            {
+                bindingNavigatorMoveFirstItem.Enabled = true;
+                bindingNavigatorMovePreviousItem.Enabled = true;
+            }
+
+
+            if (pageCurrent >= pageCount)
+            {
+                bindingNavigatorMoveNextItem.Enabled = false;
+                bindingNavigatorMoveLastItem.Enabled = false;
+            }
+            else
+            {
+                bindingNavigatorMoveNextItem.Enabled = true;
+                bindingNavigatorMoveLastItem.Enabled = true;
+            }
+            #endregion
+
+            if (pageCurrent == pageCount)
+            {
+                nEndPos = nMax;
+            }
+            else
+                nEndPos = pageSize * pageCurrent;
+
+            nStartPos = nCurrent;
+
+            totalCountLabel.Text = "/" + pageCount.ToString();
+            if (dt.Rows.Count == 0)
+            {
+                pageToolStripText.Text = "0";
+            }
+            else
+            {
+                pageToolStripText.Text = Convert.ToString(pageCurrent);
+            }
+            //从元数据源复制记录行
+            for (int i = nStartPos; i < nEndPos; i++)
+            {
+                dtTemp.ImportRow(dt.Rows[i]);
+                nCurrent++;
+            }
+
+
+            bindingSource1.DataSource = dtTemp;
+            bindingNavigator1.BindingSource = bindingSource1;
+            dataGridView.DataSource = bindingSource1;
+
+
         }
 
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -98,18 +158,106 @@ namespace PgAdmin.UI
             }
         }
 
-        int maxRows = 30;
-        PagerControl pagerControl1 = new PagerControl();
-
         private void idButton_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(idTextBox.Text)&& !string.IsNullOrWhiteSpace(DataName) && !string.IsNullOrWhiteSpace(TableName))
+            if (!string.IsNullOrWhiteSpace(idTextBox.Text) && !string.IsNullOrWhiteSpace(DataName) && !string.IsNullOrWhiteSpace(TableName))
             {
                 ClientQueryService clientQueryService = new ClientQueryService();
-                var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName,TableName, CommandType.Text, null);
+                var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName, CommandType.Text, null);
                 SearchResultForm searchResultForm = new SearchResultForm(result);
                 searchResultForm.ShowDialog();
             }
+        }
+
+
+
+        private void pageSizeText_TextChanged(object sender, EventArgs e)
+        {
+            int num = 0;
+            //输入不符合规范时，默认设置为100  
+            if (!int.TryParse(pageSizeText.Text.Trim(), out num) || num <= 0)
+            {
+                num = 25;
+                pageSizeText.Text = "25";
+            }
+            pageSize = num;
+            InitDataSet();
+
+        }
+
+
+        private void bindingNavigator1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            switch (e.ClickedItem.Text)
+            {
+                case "Move first":
+                    InitDataSet();
+                    break;
+                case "Move previous":
+                    if (pageCurrent == 1)
+                    {
+                        //MessageBox.Show("已经是第一页，请点击“下一页”查看!");
+                        return;
+                    }
+                    else
+                    {
+                        pageCurrent--;
+                        nCurrent = pageSize * (pageCurrent - 1);
+                        LoadData();
+                    }
+                    break;
+                case "Move next":
+                    if (pageCurrent == pageCount)
+                    {
+                        //bindingNavigator1.PositionItem.Text = pageCurrent.ToString();
+                        //bindingNavigatorPositionItem.Text= pageCurrent.ToString();
+                        //MessageBox.Show("已经是最后一页，请点击“上一页”查看!");
+                        return;
+                    }
+                    else
+                    {
+                        pageCurrent++;
+                        nCurrent = pageSize * (pageCurrent - 1);
+                        LoadData();
+                    }
+                    break;
+                case "Move last":
+                    pageCurrent = pageCount;
+                    nCurrent = pageSize * (pageCurrent - 1);
+                    LoadData();
+                    break;
+                default: break;
+            }
+
+        }
+
+        int pageSize = 25;
+        int pageCurrent = 1; //当前页数从1开始
+        int nCurrent = 0; //当前记录数从0开始
+        int pageCount = 0;
+        int nMax = 0;
+
+        private void bindingNavigatorPositionItem_TextChanged(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    var index = int.Parse(pageToolStripText.Text);
+            //    if (index > pageCount)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        bindingNavigator1.PositionItem.Text = pageCurrent.ToString();
+            //        pageCurrent = index;
+            //        nCurrent = pageSize * (pageCurrent - 1);
+            //        LoadData();
+            //    }
+            //}
+            //catch (Exception er)
+            //{
+            //    InitDataSet();
+            //}
         }
     }
 }
