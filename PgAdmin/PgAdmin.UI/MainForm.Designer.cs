@@ -49,18 +49,19 @@
             this.tablePanel.ForeColor = System.Drawing.SystemColors.Control;
             this.tablePanel.Location = new System.Drawing.Point(240, 0);
             this.tablePanel.Name = "tablePanel";
-            this.tablePanel.Size = new System.Drawing.Size(769, 862);
+            this.tablePanel.Size = new System.Drawing.Size(869, 862);
             this.tablePanel.TabIndex = 5;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 862);
+            this.ClientSize = new System.Drawing.Size(1109, 862);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.MenuPanel);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "PgAdminTool";
             this.ResumeLayout(false);
 
         }

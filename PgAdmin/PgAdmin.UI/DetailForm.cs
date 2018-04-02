@@ -11,6 +11,9 @@ using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using NLog;
+using System.Configuration;
+using System.IO;
 
 namespace PgAdmin.UI
 {
@@ -20,9 +23,6 @@ namespace PgAdmin.UI
         {
             InitializeComponent();
             bindingNavigator1.Enabled = false;
-            //pageSearchPanel.Controls.Add(pagerControl1);
-            //pagerControl1.Dock = DockStyle.Bottom;           
-            //pagerControl1.OnPageChanged += new EventHandler(pagerControl1_OnPageChanged);
         }
 
         private void GridLayoutResize()
@@ -33,11 +33,12 @@ namespace PgAdmin.UI
             dataGridView.ColumnHeadersHeight = dataGridView.Height / 20;
             for (int i = 0; i < dataGridView.Columns.Count; i++)
             {
-                dataGridView.Columns[i].Width = dataGridView.Width / dataGridView.Columns.Count;
+                dataGridView.Columns[i].Width = (dataGridView.Width - dataGridView.RowHeadersWidth) / dataGridView.Columns.Count;
             }
             for (int i = 0; i < dataGridView.Rows.Count; i++)
             {
-                dataGridView.Rows[i].Height = (dataGridView.Height - dataGridView.ColumnHeadersHeight - SystemInformation.HorizontalScrollBarHeight) / pageSize;
+                dataGridView.Rows[i].Height = (dataGridView.Height - dataGridView.ColumnHeadersHeight
+                    - SystemInformation.HorizontalScrollBarHeight) / pageSize;
             }
         }
 
@@ -54,31 +55,27 @@ namespace PgAdmin.UI
             set
             {
                 dt = value;
-                if (dt != null && dt.Rows.Count > 0)
-                    InitDataSet();
+                if (dt != null)
+                    InitDataSet(dt);
                 GridLayoutResize();
             }
         }
 
 
-        private void pagerControl1_OnPageChanged(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
-        private void InitDataSet()
+        private void InitDataSet(DataTable dataTable)
         {
             bindingNavigator1.Enabled = true;
             pageToolStripText.Enabled = true;
-            nMax = dt.Rows.Count;
+            nMax = dataTable.Rows.Count;
             pageCount = (nMax / pageSize);
             if ((nMax % pageSize) > 0) pageCount++;
             pageCurrent = 1;
             nCurrent = 0;
-            LoadData();
+            LoadData(dataTable);
             pageSizeText.Text = pageSize.ToString();
             totalCountLabel.Visible = true;
             totalCountLabel.Text = "/" + pageCount.ToString();
+            totalCountsBox.Text = nMax.ToString();
         }
         private void SetButton()
         {
@@ -105,12 +102,12 @@ namespace PgAdmin.UI
                 bindingNavigatorMoveLastItem.Enabled = true;
             }
         }
-        private void LoadData()
+        private void LoadData(DataTable dataTable)
         {
             int nStartPos = 0;
             int nEndPos = 0;
 
-            dtTemp = dt.Clone();
+            dtTemp = dataTable.Clone();
 
             SetButton();
 
@@ -124,21 +121,19 @@ namespace PgAdmin.UI
             nStartPos = nCurrent;
 
             totalCountLabel.Text = "/" + pageCount.ToString();
-            if (dt.Rows.Count == 0)
+            if (dataTable.Rows.Count <= 0)
             {
                 pageToolStripText.Text = "0";
             }
             else
             {
                 pageToolStripText.Text = Convert.ToString(pageCurrent);
+                for (int i = nStartPos; i < nEndPos; i++)
+                {
+                    dtTemp.ImportRow(dataTable.Rows[i]);
+                    nCurrent++;
+                }
             }
-            //从元数据源复制记录行
-            for (int i = nStartPos; i < nEndPos; i++)
-            {
-                dtTemp.ImportRow(dt.Rows[i]);
-                nCurrent++;
-            }
-
             bindingSource1.DataSource = dtTemp;
             dataGridView.DataSource = bindingSource1;
             AddExportButton();
@@ -152,28 +147,23 @@ namespace PgAdmin.UI
                 if (!String.IsNullOrEmpty(title))
                 {
                     JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString());
-                    JsonForm jsonForm = new JsonForm();
-                    jsonForm.JsonData = jo;
-                    jsonForm.Title = title;
-                    jsonForm.StartPosition = FormStartPosition.CenterScreen;
-                    jsonForm.Show();
-                    jsonForm.Focus();
+                    ShowJsonForm(jo);
                 }
             }
         }
         private void AddExportButton()
         {
-            
+
             if (!ContainsColumn("Export"))
             {
                 DataGridViewButtonColumn Column1 = new DataGridViewButtonColumn();
                 Column1.HeaderText = "Export";
-                Column1.UseColumnTextForButtonValue=true;
+                Column1.UseColumnTextForButtonValue = true;
                 Column1.Text = "Export";
                 this.dataGridView.Columns.Add(Column1);
             }
-          
-            
+
+
         }
         private bool ContainsColumn(string containsValue)
         {
@@ -184,7 +174,7 @@ namespace PgAdmin.UI
                     return true;
             }
             return false;
-        } 
+        }
 
         private void idButton_Click(object sender, EventArgs e)
         {
@@ -205,16 +195,12 @@ namespace PgAdmin.UI
                     var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
                         CommandType.Text, null).Data;
                     JObject jo = (JObject)JsonConvert.DeserializeObject(result);
-                    JsonForm jsonForm = new JsonForm();
-                    jsonForm.JsonData = jo;
-                    jsonForm.Title = idTextBox.Text;
-                    jsonForm.StartPosition = FormStartPosition.CenterScreen;
-                    jsonForm.Show();
-                    jsonForm.Focus();
+                    ShowJsonForm(jo);
                 }
             }
             catch (Exception ex)
             {
+                logger.Log(LogLevel.Error, "idSearchError:" + ex.Message);
                 MessageBox.Show("error occoured when query data,please ensure you have selected the right table", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -230,7 +216,7 @@ namespace PgAdmin.UI
                 pageSizeText.Text = "25";
             }
             pageSize = num;
-            InitDataSet();
+            InitDataSet(dt);
 
         }
 
@@ -240,7 +226,7 @@ namespace PgAdmin.UI
             switch (e.ClickedItem.Text)
             {
                 case "Move first":
-                    InitDataSet();
+                    InitDataSet(dt);
                     break;
                 case "Move previous":
                     if (pageCurrent == 1)
@@ -252,7 +238,7 @@ namespace PgAdmin.UI
                     {
                         pageCurrent--;
                         nCurrent = pageSize * (pageCurrent - 1);
-                        LoadData();
+                        pageToolStripText.Text = pageCurrent.ToString();
                     }
                     break;
                 case "Move next":
@@ -265,13 +251,14 @@ namespace PgAdmin.UI
                     {
                         pageCurrent++;
                         nCurrent = pageSize * (pageCurrent - 1);
-                        LoadData();
+                        pageToolStripText.Text = pageCurrent.ToString();
+
                     }
                     break;
                 case "Move last":
                     pageCurrent = pageCount;
                     nCurrent = pageSize * (pageCurrent - 1);
-                    LoadData();
+                    pageToolStripText.Text = pageCurrent.ToString();
                     break;
                 default: break;
             }
@@ -280,31 +267,60 @@ namespace PgAdmin.UI
 
         private void bindingNavigatorPositionItem_TextChanged(object sender, EventArgs e)
         {
-            if (IsInt(pageToolStripText.Text))
+            try
             {
-                var index = int.Parse(pageToolStripText.Text);
-
-                if (index > pageCount)
+                logger.Log(LogLevel.Error, "CurrenTest:" + pageToolStripText.Text);
+                if (IsInt(pageToolStripText.Text))
                 {
-                    pageToolStripText.Text = pageCurrent.ToString();
-                    MessageBox.Show("Out of range!");
-                    return;
+                    var index = int.Parse(pageToolStripText.Text);
+
+                    if (index > pageCount)
+                    {
+                        pageToolStripText.Text = pageCurrent.ToString();
+                        MessageBox.Show("Out of range!");
+                        return;
+                    }
+                    else
+                    {
+                        pageCurrent = index;
+                        nCurrent = pageSize * (pageCurrent - 1);
+                        LoadData(dt);
+                    }
                 }
                 else
                 {
-                    pageCurrent = index;
-                    nCurrent = pageSize * (pageCurrent - 1);
-                    LoadData();
+                    MessageBox.Show("Invalid input!");
+                    return;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Invalid input!");
+                logger.Log(LogLevel.Error, "CurrentPageSizeSetError:" + ex.Message);
                 return;
             }
 
-
         }
+
+        private void logButton_Click(object sender, EventArgs e)
+        {
+            var path = Environment.CurrentDirectory + "\\logs\\";
+            path += GetLatestFileTimeInfo(path) + "\\logs";
+            DirectoryInfo logs = new DirectoryInfo(path);
+            FileInfo[] fileInfo = logs.GetFiles("Error.log");
+            if (fileInfo != null)
+            {
+                string log = "";
+                foreach (FileInfo temp in fileInfo)
+                {
+                    using (StreamReader sr = temp.OpenText())
+                    {
+                        log += sr.ReadToEnd();
+                    }
+                }
+                MessageBox.Show(log);
+            }
+        }
+
 
         public static bool IsInt(string strNumber)
         {
@@ -317,13 +333,50 @@ namespace PgAdmin.UI
              objNumberPattern.IsMatch(strNumber);
         }
 
+        private void ShowJsonForm(JObject jo)
+        {
+            try
+            {
+                JsonForm jsonForm = new JsonForm();
+                jsonForm.JsonData = jo;
+                jsonForm.Title = idTextBox.Text;
+                jsonForm.StartPosition = FormStartPosition.CenterScreen;
+                jsonForm.Show();
+                jsonForm.Focus();
+            }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, "ShowJsonFormError:" + ex.Message);
+            }
+        }
 
+        static string GetLatestFileTimeInfo(string dir)
+        {
+            List<DateTime> dateList = new List<DateTime>();
+            DirectoryInfo search = new DirectoryInfo(dir);
+            FileSystemInfo[] fsinfos = search.GetFileSystemInfos();
+            foreach (FileSystemInfo fsinfo in fsinfos)
+            {
+                if (fsinfo is DirectoryInfo)
+                {
+                    dateList.Add(fsinfo.CreationTime);
+                }
+
+            }
+            dateList.Sort();
+            var date = dateList[dateList.Count - 1].ToString("yyyy-MM-dd");
+            return date;
+        }
+
+        #region FIELDS
         int pageSize = 25;
         int pageCurrent = 1; //当前页数从1开始
         int nCurrent = 0; //当前记录数从0开始
         int pageCount = 0;
         int nMax = 0;
         DataTable dtTemp;
+        private ILogger logger = LogManager.GetLogger("DetailForm");
+        #endregion
 
     }
 }

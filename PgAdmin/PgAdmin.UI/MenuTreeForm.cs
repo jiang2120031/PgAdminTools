@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PgAdmin.Services;
 using PgAdmin.Services.Model;
+using System.Configuration;
+using NLog;
 
 namespace PgAdmin.UI
 {
@@ -26,6 +28,7 @@ namespace PgAdmin.UI
         ClientQueryService postgresHelper = new ClientQueryService();
         FindAllDbAndTables findDocuments = new FindAllDbAndTables();
         public UpdateDelegate updateTable;
+        private ILogger logger = LogManager.GetLogger("MenuTreeForm");
 
         public DataTable DetailDataTable
         {
@@ -38,34 +41,46 @@ namespace PgAdmin.UI
                 detailDataTable = value;
             }
         }
-        
+
 
         public string DataName { get; set; }
-        public string TableName { get; set;}
+        public string TableName { get; set; }
 
 
-        private List<DbName> GetDBDocuments(string sql, string database)
+        private List<DbName> GetDBDocuments(string sql)
         {
-            var dbConnStr = " Host=localhost;Database=" + database +
-                ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
-            var dbList = findDocuments.FindDbAndTables(dbConnStr, System.Data.CommandType.Text, sql).ToList();
-            return dbList;
+            try
+            {
+                var connectionString = ConfigurationManager.ConnectionStrings["postgres"].ConnectionString;
+                var dbList = findDocuments.FindDbAndTables(connectionString, System.Data.CommandType.Text, sql).ToList();
+                return dbList;
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "GetDBDocuments:" + e.Message);
+                return null;
+            }
         }
-
         private DataTable GetDetailDocuments(string tablename, string database)
         {
-            var sql = @"SELECT * FROM " + tablename;
-            var dbConnStr = " Host=localhost;Database=" + database +
-                ";Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;";
+            try
+            { var sql = @"SELECT * FROM " + tablename;
+            var dbConnStr = string.Format("Host=localhost;Database={0};Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;", database);
             var dataTable = new DataTable();
             dataTable.Load(postgresHelper.ExecuteReader(dbConnStr, System.Data.CommandType.Text, sql));
             return dataTable;
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "GetDetailDocuments:" + e.Message);
+                return null;
+            }
         }
-        
+
         private void InitMenuTree()
         {
             treeView.Nodes.Clear();
-            var ds = GetDBDocuments(@"SELECT datname FROM pg_database", "postgres");
+            var ds = GetDBDocuments(@"SELECT datname FROM pg_database");
             foreach (var item in ds)
             {
                 if (!item.DName.Contains("template"))

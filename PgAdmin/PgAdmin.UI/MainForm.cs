@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NLog;
 
 namespace PgAdmin.UI
 {
@@ -14,16 +15,22 @@ namespace PgAdmin.UI
     {
         public MainForm()
         {
-            InitializeComponent();
-            FormLayout();
-            menuTreeForm.updateTable += new UpdateDelegate(UpdateDetailTable);
-            menuTreeForm.updateTable.Invoke();
+            try
+            {
+                InitializeComponent();
+                FormLayout();
+                menuTreeForm.updateTable += new UpdateDelegate(UpdateDetailTable);
+                menuTreeForm.updateTable.Invoke();
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "MainForm:" + e.Message);
+            }
         }
 
         private void FormLayout()
         {
             MenuPanel.Dock = DockStyle.Left;
-            MenuPanel.Width = this.Width / 5;
             menuTreeForm.TopLevel = false;
             MenuPanel.Controls.Add(menuTreeForm);
             menuTreeForm.Show();
@@ -35,9 +42,14 @@ namespace PgAdmin.UI
             detailForm.Dock = DockStyle.Fill;
             detailForm.FormBorderStyle = FormBorderStyle.None;
         }
+        private void FormResize()
+        {
+            MenuPanel.Width = this.Width / 5;
+        }
 
         public void UpdateDetailTable()
         {
+            FormResize();
             detailForm.DetailDataTable = menuTreeForm.DetailDataTable;
             detailForm.DataName = menuTreeForm.DataName;
             detailForm.TableName = menuTreeForm.TableName;
@@ -45,8 +57,11 @@ namespace PgAdmin.UI
 
         DetailForm detailForm = new DetailForm();
         MenuTreeForm menuTreeForm = new MenuTreeForm();
-
+        #region FIELDS
+        private ILogger logger = LogManager.GetLogger("PgAdmin");
+        #endregion
     }
+
     public delegate void UpdateDelegate();
-      
+
 }

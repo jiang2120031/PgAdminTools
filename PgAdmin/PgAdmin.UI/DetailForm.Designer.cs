@@ -29,13 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetailForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.searchPanel = new System.Windows.Forms.Panel();
             this.pageSearchPanel = new System.Windows.Forms.Panel();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.totalCountLabel = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.totalCountsBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.pageSizeText = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
@@ -52,6 +54,7 @@
             this.idLabel = new System.Windows.Forms.Label();
             this.idButton = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.logButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.searchPanel.SuspendLayout();
             this.pageSearchPanel.SuspendLayout();
@@ -66,39 +69,40 @@
             this.dataGridView.AllowUserToOrderColumns = true;
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 37);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(850, 475);
+            this.dataGridView.Size = new System.Drawing.Size(965, 475);
             this.dataGridView.TabIndex = 4;
             this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDoubleClick);
             // 
             // searchPanel
             // 
             this.searchPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.searchPanel.Controls.Add(this.logButton);
             this.searchPanel.Controls.Add(this.pageSearchPanel);
             this.searchPanel.Controls.Add(this.searchByIDpPanel);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.searchPanel.Location = new System.Drawing.Point(0, 0);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(850, 37);
+            this.searchPanel.Size = new System.Drawing.Size(965, 37);
             this.searchPanel.TabIndex = 3;
             // 
             // pageSearchPanel
             // 
             this.pageSearchPanel.Controls.Add(this.bindingNavigator1);
             this.pageSearchPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pageSearchPanel.Location = new System.Drawing.Point(523, 0);
+            this.pageSearchPanel.Location = new System.Drawing.Point(500, 0);
             this.pageSearchPanel.Name = "pageSearchPanel";
-            this.pageSearchPanel.Size = new System.Drawing.Size(327, 37);
+            this.pageSearchPanel.Size = new System.Drawing.Size(465, 37);
             this.pageSearchPanel.TabIndex = 4;
             // 
             // bindingNavigator1
@@ -110,6 +114,8 @@
             this.bindingNavigator1.DeleteItem = null;
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel3,
+            this.totalCountsBox,
             this.toolStripLabel1,
             this.pageSizeText,
             this.toolStripLabel2,
@@ -129,29 +135,46 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.pageToolStripText;
-            this.bindingNavigator1.Size = new System.Drawing.Size(327, 37);
+            this.bindingNavigator1.Size = new System.Drawing.Size(465, 37);
             this.bindingNavigator1.TabIndex = 6;
             this.bindingNavigator1.Text = "bindingNavigator1";
             this.bindingNavigator1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bindingNavigator1_ItemClicked);
             // 
             // totalCountLabel
             // 
+            this.totalCountLabel.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.totalCountLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalCountLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.totalCountLabel.Name = "totalCountLabel";
-            this.totalCountLabel.Size = new System.Drawing.Size(26, 34);
+            this.totalCountLabel.Size = new System.Drawing.Size(27, 34);
             this.totalCountLabel.Text = "/{0}";
             this.totalCountLabel.ToolTipText = "Total number of pages\r\n";
             // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(76, 34);
+            this.toolStripLabel3.Text = "TotalCounts:";
+            // 
+            // totalCountsBox
+            // 
+            this.totalCountsBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalCountsBox.Name = "totalCountsBox";
+            this.totalCountsBox.Size = new System.Drawing.Size(50, 37);
+            // 
             // toolStripLabel1
             // 
-            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel1.ForeColor = System.Drawing.SystemColors.Control;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(102, 34);
+            this.toolStripLabel1.Size = new System.Drawing.Size(109, 34);
             this.toolStripLabel1.Text = "  CurrentPageSize:";
             // 
             // pageSizeText
             // 
+            this.pageSizeText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageSizeText.Name = "pageSizeText";
             this.pageSizeText.Size = new System.Drawing.Size(30, 37);
             this.pageSizeText.TextChanged += new System.EventHandler(this.pageSizeText_TextChanged);
@@ -190,6 +213,7 @@
             // 
             this.pageToolStripText.AccessibleName = "Position";
             this.pageToolStripText.AutoSize = false;
+            this.pageToolStripText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageToolStripText.Name = "pageToolStripText";
             this.pageToolStripText.Size = new System.Drawing.Size(50, 23);
             this.pageToolStripText.Text = "0";
@@ -232,14 +256,15 @@
             this.searchByIDpPanel.Controls.Add(this.idTextBox);
             this.searchByIDpPanel.Controls.Add(this.idLabel);
             this.searchByIDpPanel.Controls.Add(this.idButton);
-            this.searchByIDpPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.searchByIDpPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchByIDpPanel.Location = new System.Drawing.Point(0, 0);
             this.searchByIDpPanel.Name = "searchByIDpPanel";
-            this.searchByIDpPanel.Size = new System.Drawing.Size(379, 37);
+            this.searchByIDpPanel.Size = new System.Drawing.Size(965, 37);
             this.searchByIDpPanel.TabIndex = 3;
             // 
             // idTextBox
             // 
+            this.idTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idTextBox.Location = new System.Drawing.Point(29, 8);
             this.idTextBox.Name = "idTextBox";
             this.idTextBox.Size = new System.Drawing.Size(243, 20);
@@ -248,16 +273,18 @@
             // idLabel
             // 
             this.idLabel.AutoSize = true;
+            this.idLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.idLabel.Location = new System.Drawing.Point(2, 12);
             this.idLabel.Name = "idLabel";
-            this.idLabel.Size = new System.Drawing.Size(21, 13);
+            this.idLabel.Size = new System.Drawing.Size(24, 13);
             this.idLabel.TabIndex = 4;
             this.idLabel.Text = "ID:";
             // 
             // idButton
             // 
             this.idButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.idButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idButton.ForeColor = System.Drawing.SystemColors.Control;
             this.idButton.Location = new System.Drawing.Point(278, 6);
             this.idButton.Name = "idButton";
@@ -267,12 +294,26 @@
             this.idButton.UseVisualStyleBackColor = true;
             this.idButton.Click += new System.EventHandler(this.idButton_Click);
             // 
+            // logButton
+            // 
+            this.logButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.logButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.logButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.logButton.Location = new System.Drawing.Point(446, 0);
+            this.logButton.Name = "logButton";
+            this.logButton.Size = new System.Drawing.Size(54, 37);
+            this.logButton.TabIndex = 7;
+            this.logButton.Text = "DebugLogs";
+            this.logButton.UseVisualStyleBackColor = true;
+            this.logButton.Click += new System.EventHandler(this.logButton_Click);
+            // 
             // DetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(850, 512);
+            this.ClientSize = new System.Drawing.Size(965, 512);
             this.ControlBox = false;
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.searchPanel);
@@ -317,5 +358,8 @@
         private System.Windows.Forms.ToolStripTextBox pageSizeText;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox pageToolStripText;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripTextBox totalCountsBox;
+        private System.Windows.Forms.Button logButton;
     }
 }
