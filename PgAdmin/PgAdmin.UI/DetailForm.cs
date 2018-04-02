@@ -29,8 +29,6 @@ namespace PgAdmin.UI
         {
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.Height = this.Height - searchPanel.Height;
-            dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridView.ColumnHeadersHeight = dataGridView.Height / 20;
             for (int i = 0; i < dataGridView.Columns.Count; i++)
             {
                 dataGridView.Columns[i].Width = dataGridView.Width / dataGridView.Columns.Count;
@@ -54,7 +52,7 @@ namespace PgAdmin.UI
             set
             {
                 dt = value;
-                if (dt != null&&dt.Rows.Count>0)
+                if (dt != null)
                     InitDataSet();
                 GridLayoutResize();
             }
@@ -299,5 +297,33 @@ namespace PgAdmin.UI
         int pageCount = 0;
         int nMax = 0;
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+           if(dataGridView.CurrentRow==null || dataGridView.CurrentRow.Index<0)
+            {
+                return;
+            }
+
+            JObject jo = (JObject)JsonConvert.DeserializeObject(
+                dataGridView.CurrentRow.Cells[1].Value.ToString());
+            FileForm fileForm = new FileForm();
+            fileForm.jsonFileStr = jo.ToString();
+
+            fileForm.ShowDialog();
+
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.CurrentRow == null || dataGridView.CurrentRow.Index < 0)
+            {
+                return;
+            }
+
+            JObject jo = (JObject)JsonConvert.DeserializeObject(
+                dataGridView.CurrentRow.Cells[1].Value.ToString());
+            Clipboard.SetDataObject(jo.ToString(), true);
+            MessageBox.Show("Copy to clipboard successfully.");
+        }
     }
 }

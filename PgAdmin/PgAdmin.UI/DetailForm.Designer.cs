@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetailForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.searchPanel = new System.Windows.Forms.Panel();
@@ -52,6 +51,8 @@
             this.idLabel = new System.Windows.Forms.Label();
             this.idButton = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCopy = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.searchPanel.SuspendLayout();
             this.pageSearchPanel.SuspendLayout();
@@ -64,51 +65,46 @@
             // dataGridView
             // 
             this.dataGridView.AllowUserToOrderColumns = true;
-            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView.Location = new System.Drawing.Point(0, 37);
+            this.dataGridView.Location = new System.Drawing.Point(0, 46);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(850, 475);
+            this.dataGridView.Size = new System.Drawing.Size(1156, 584);
             this.dataGridView.TabIndex = 4;
             this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDoubleClick);
             // 
             // searchPanel
             // 
-            this.searchPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.searchPanel.Controls.Add(this.btnCopy);
+            this.searchPanel.Controls.Add(this.btnSave);
             this.searchPanel.Controls.Add(this.pageSearchPanel);
             this.searchPanel.Controls.Add(this.searchByIDpPanel);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.searchPanel.Location = new System.Drawing.Point(0, 0);
+            this.searchPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(850, 37);
+            this.searchPanel.Size = new System.Drawing.Size(1156, 46);
             this.searchPanel.TabIndex = 3;
             // 
             // pageSearchPanel
             // 
             this.pageSearchPanel.Controls.Add(this.bindingNavigator1);
             this.pageSearchPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pageSearchPanel.Location = new System.Drawing.Point(523, 0);
+            this.pageSearchPanel.Location = new System.Drawing.Point(720, 0);
+            this.pageSearchPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pageSearchPanel.Name = "pageSearchPanel";
-            this.pageSearchPanel.Size = new System.Drawing.Size(327, 37);
+            this.pageSearchPanel.Size = new System.Drawing.Size(436, 46);
             this.pageSearchPanel.TabIndex = 4;
             // 
             // bindingNavigator1
             // 
             this.bindingNavigator1.AddNewItem = null;
-            this.bindingNavigator1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigator1.CountItem = this.totalCountLabel;
             this.bindingNavigator1.CountItemFormat = "/{0}";
             this.bindingNavigator1.DeleteItem = null;
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bindingNavigator1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.pageSizeText,
@@ -129,69 +125,64 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.pageToolStripText;
-            this.bindingNavigator1.Size = new System.Drawing.Size(327, 37);
+            this.bindingNavigator1.Size = new System.Drawing.Size(436, 46);
             this.bindingNavigator1.TabIndex = 6;
             this.bindingNavigator1.Text = "bindingNavigator1";
             this.bindingNavigator1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bindingNavigator1_ItemClicked);
             // 
             // totalCountLabel
             // 
-            this.totalCountLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.totalCountLabel.Name = "totalCountLabel";
-            this.totalCountLabel.Size = new System.Drawing.Size(26, 34);
+            this.totalCountLabel.Size = new System.Drawing.Size(34, 43);
             this.totalCountLabel.Text = "/{0}";
             this.totalCountLabel.ToolTipText = "Total number of pages\r\n";
             // 
             // toolStripLabel1
             // 
-            this.toolStripLabel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.toolStripLabel1.ForeColor = System.Drawing.SystemColors.Control;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(102, 34);
+            this.toolStripLabel1.Size = new System.Drawing.Size(141, 43);
             this.toolStripLabel1.Text = "  CurrentPageSize:";
             // 
             // pageSizeText
             // 
             this.pageSizeText.Name = "pageSizeText";
-            this.pageSizeText.Size = new System.Drawing.Size(30, 37);
+            this.pageSizeText.Size = new System.Drawing.Size(39, 46);
             this.pageSizeText.TextChanged += new System.EventHandler(this.pageSizeText_TextChanged);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(0, 34);
+            this.toolStripLabel2.Size = new System.Drawing.Size(0, 43);
             // 
             // bindingNavigatorMoveFirstItem
             // 
-            this.bindingNavigatorMoveFirstItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 34);
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(24, 43);
             this.bindingNavigatorMoveFirstItem.Text = "Move first";
             // 
             // bindingNavigatorMovePreviousItem
             // 
-            this.bindingNavigatorMovePreviousItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 34);
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(24, 43);
             this.bindingNavigatorMovePreviousItem.Text = "Move previous";
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 37);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 46);
             // 
             // pageToolStripText
             // 
             this.pageToolStripText.AccessibleName = "Position";
             this.pageToolStripText.AutoSize = false;
             this.pageToolStripText.Name = "pageToolStripText";
-            this.pageToolStripText.Size = new System.Drawing.Size(50, 23);
+            this.pageToolStripText.Size = new System.Drawing.Size(65, 27);
             this.pageToolStripText.Text = "0";
             this.pageToolStripText.ToolTipText = "Current position\r\n";
             this.pageToolStripText.TextChanged += new System.EventHandler(this.bindingNavigatorPositionItem_TextChanged);
@@ -199,33 +190,30 @@
             // bindingNavigatorSeparator1
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 37);
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 46);
             // 
             // bindingNavigatorMoveNextItem
             // 
-            this.bindingNavigatorMoveNextItem.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 34);
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(24, 43);
             this.bindingNavigatorMoveNextItem.Text = "Move next";
             // 
             // bindingNavigatorMoveLastItem
             // 
-            this.bindingNavigatorMoveLastItem.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.ForeColor = System.Drawing.SystemColors.Control;
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 20);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(24, 43);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 37);
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 46);
             // 
             // searchByIDpPanel
             // 
@@ -234,49 +222,69 @@
             this.searchByIDpPanel.Controls.Add(this.idButton);
             this.searchByIDpPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.searchByIDpPanel.Location = new System.Drawing.Point(0, 0);
+            this.searchByIDpPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.searchByIDpPanel.Name = "searchByIDpPanel";
-            this.searchByIDpPanel.Size = new System.Drawing.Size(379, 37);
+            this.searchByIDpPanel.Size = new System.Drawing.Size(505, 46);
             this.searchByIDpPanel.TabIndex = 3;
             // 
             // idTextBox
             // 
-            this.idTextBox.Location = new System.Drawing.Point(29, 8);
+            this.idTextBox.Location = new System.Drawing.Point(39, 10);
+            this.idTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.idTextBox.Name = "idTextBox";
-            this.idTextBox.Size = new System.Drawing.Size(243, 20);
+            this.idTextBox.Size = new System.Drawing.Size(323, 22);
             this.idTextBox.TabIndex = 5;
             // 
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.idLabel.Location = new System.Drawing.Point(2, 12);
+            this.idLabel.Location = new System.Drawing.Point(3, 15);
+            this.idLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.idLabel.Name = "idLabel";
-            this.idLabel.Size = new System.Drawing.Size(21, 13);
+            this.idLabel.Size = new System.Drawing.Size(25, 17);
             this.idLabel.TabIndex = 4;
             this.idLabel.Text = "ID:";
             // 
             // idButton
             // 
-            this.idButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.idButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.idButton.Location = new System.Drawing.Point(278, 6);
+            this.idButton.Location = new System.Drawing.Point(371, 7);
+            this.idButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.idButton.Name = "idButton";
-            this.idButton.Size = new System.Drawing.Size(75, 23);
+            this.idButton.Size = new System.Drawing.Size(100, 28);
             this.idButton.TabIndex = 3;
             this.idButton.Text = "Search";
             this.idButton.UseVisualStyleBackColor = true;
             this.idButton.Click += new System.EventHandler(this.idButton_Click);
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(484, 6);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(85, 31);
+            this.btnSave.TabIndex = 5;
+            this.btnSave.Text = "Save File";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(581, 6);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(136, 31);
+            this.btnCopy.TabIndex = 6;
+            this.btnCopy.Text = "Copy to clipboard";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
             // DetailForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(850, 512);
+            this.ClientSize = new System.Drawing.Size(1156, 630);
             this.ControlBox = false;
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.searchPanel);
-            this.ForeColor = System.Drawing.SystemColors.Control;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "DetailForm";
             this.Text = "Detail";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
@@ -316,5 +324,7 @@
         private System.Windows.Forms.ToolStripTextBox pageSizeText;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox pageToolStripText;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnCopy;
     }
 }

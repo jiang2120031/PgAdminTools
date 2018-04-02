@@ -34,31 +34,30 @@
             // 
             // MenuPanel
             // 
-            this.MenuPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.MenuPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.MenuPanel.ForeColor = System.Drawing.SystemColors.Control;
             this.MenuPanel.Location = new System.Drawing.Point(0, 0);
+            this.MenuPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MenuPanel.Name = "MenuPanel";
-            this.MenuPanel.Size = new System.Drawing.Size(240, 862);
+            this.MenuPanel.Size = new System.Drawing.Size(267, 1027);
             this.MenuPanel.TabIndex = 0;
             // 
             // tablePanel
             // 
-            this.tablePanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.tablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablePanel.ForeColor = System.Drawing.SystemColors.Control;
-            this.tablePanel.Location = new System.Drawing.Point(240, 0);
+            this.tablePanel.Location = new System.Drawing.Point(267, 0);
+            this.tablePanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tablePanel.Name = "tablePanel";
-            this.tablePanel.Size = new System.Drawing.Size(769, 862);
+            this.tablePanel.Size = new System.Drawing.Size(1176, 1027);
             this.tablePanel.TabIndex = 5;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 862);
+            this.ClientSize = new System.Drawing.Size(1443, 1027);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.MenuPanel);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
