@@ -24,16 +24,7 @@ namespace PgAdmin.Services
                 if (!datName.Contains("template"))
                 {
                     string connStr = "Host=localhost;Port=5432;Username=postgres;Password=123456;Database=" + datName;
-                    var findTable = postgresHelper.ExecuteQuery(connStr, cmdType,
-                        @"SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'", null);
-                    foreach (DataRow tableNameS in findTable.Tables[0].Rows)
-                    {
-                        tNameS.Add(
-                            new TableName()
-                            {
-                                TName = tableNameS["table_name"].ToString()
-                            });
-                    }
+                    tNameS = FindTables(connStr, cmdType);
                 }
                 dbNameS.Add(new DbName()
                 {
@@ -42,6 +33,22 @@ namespace PgAdmin.Services
                 });
             }
             return dbNameS;
+        }
+        public IList<TableName> FindTables(string connectionString, CommandType cmdType)
+        {
+            IList<TableName> tNameS = new List<TableName>();
+            var findTable = postgresHelper.ExecuteQuery(connectionString, cmdType,
+                @"SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'", null);
+            foreach (DataRow tableNameS in findTable.Tables[0].Rows)
+            {
+                tNameS.Add(
+                    new TableName()
+                    {
+                        TName = tableNameS["table_name"].ToString()
+                    });
+            }
+            return tNameS;
+
         }
 
         ClientQueryService postgresHelper = new ClientQueryService();

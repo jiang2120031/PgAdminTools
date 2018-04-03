@@ -105,7 +105,7 @@
             // 
             this.copyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyButton.Location = new System.Drawing.Point(705, 20);
+            this.copyButton.Location = new System.Drawing.Point(520, 20);
             this.copyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(79, 26);
@@ -118,7 +118,7 @@
             // 
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(792, 20);
+            this.saveButton.Location = new System.Drawing.Point(660, 20);
             this.saveButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(79, 26);

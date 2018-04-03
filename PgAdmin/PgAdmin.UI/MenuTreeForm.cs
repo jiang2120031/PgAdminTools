@@ -81,7 +81,13 @@ namespace PgAdmin.UI
         {
             treeView.Nodes.Clear();
             var ds = GetDBDocuments(@"SELECT datname FROM pg_database");
-            foreach (var item in ds)
+            UpdateMenuTree(ds);
+        }
+
+        private void UpdateMenuTree(List<DbName> dbnames)
+        {
+            treeView.Nodes.Clear();
+            foreach (var item in dbnames)
             {
                 if (!item.DName.Contains("template"))
                 {
@@ -112,6 +118,24 @@ namespace PgAdmin.UI
 
         }
 
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(databaseBox.Text))
+            {
+                try
+                {
+                    var sql = string.Format(@"SELECT u.datname  FROM pg_catalog.pg_database u where u.datname='"+databaseBox.Text+"';");
+                    var ds = GetDBDocuments(sql);
+                    UpdateMenuTree(ds);
 
+                }
+                catch (Exception ex)
+                {
+                    logger.Log(LogLevel.Error, ex.Message);
+                }
+            }
+            else
+                InitMenuTree();
+        }
     }
 }

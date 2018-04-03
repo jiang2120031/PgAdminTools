@@ -267,7 +267,6 @@ namespace PgAdmin.UI
         {
             try
             {
-                logger.Log(LogLevel.Error, "CurrenTest:" + pageToolStripText.Text);
                 if (IsInt(pageToolStripText.Text))
                 {
                     var index = int.Parse(pageToolStripText.Text);
