@@ -98,6 +98,6 @@ namespace PgAdmin.UI
             FileForm fileForm = new FileForm();
             fileForm.jsonFileStr = jobject.ToString();
             fileForm.ShowDialog();
-        //}
+        }
     }
 }
