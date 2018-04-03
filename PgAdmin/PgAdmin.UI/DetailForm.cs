@@ -22,11 +22,12 @@ namespace PgAdmin.UI
         }
 
         private ILogger logger = LogManager.GetLogger("DetailForm");
-
+        JObject jobject;
         public JObject JsonData
         {
             set
             {
+                jobject = value;
                 jsonTextBox.Text = value.ToString();
             }
 
@@ -84,5 +85,19 @@ namespace PgAdmin.UI
             }
 
         }
+        
+
+        private void copyButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(jobject.ToString(), true);
+            MessageBox.Show("Copy to clipboard successfully.");
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {           
+            FileForm fileForm = new FileForm();
+            fileForm.jsonFileStr = jobject.ToString();
+            fileForm.ShowDialog();
+        //}
     }
 }

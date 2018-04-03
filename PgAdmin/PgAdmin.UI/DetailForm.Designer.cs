@@ -33,6 +33,8 @@
             this.searchPanel = new System.Windows.Forms.Panel();
             this.searchButton = new System.Windows.Forms.Button();
             this.searchText = new System.Windows.Forms.TextBox();
+            this.copyButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.JsonPanel.SuspendLayout();
             this.searchPanel.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +68,8 @@
             // searchPanel
             // 
             this.searchPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.searchPanel.Controls.Add(this.saveButton);
+            this.searchPanel.Controls.Add(this.copyButton);
             this.searchPanel.Controls.Add(this.searchButton);
             this.searchPanel.Controls.Add(this.searchText);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -97,7 +101,33 @@
             this.searchText.Size = new System.Drawing.Size(350, 26);
             this.searchText.TabIndex = 0;
             // 
-            // JsonForm
+            // copyButton
+            // 
+            this.copyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.copyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyButton.Location = new System.Drawing.Point(705, 20);
+            this.copyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(79, 26);
+            this.copyButton.TabIndex = 2;
+            this.copyButton.Text = "Copy";
+            this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Click += new System.EventHandler(this.copyButton_Click);
+            // 
+            // saveButton
+            // 
+            this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveButton.Location = new System.Drawing.Point(792, 20);
+            this.saveButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(79, 26);
+            this.saveButton.TabIndex = 3;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // DetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -105,7 +135,7 @@
             this.Controls.Add(this.JsonPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "JsonForm";
+            this.Name = "DetailForm";
             this.JsonPanel.ResumeLayout(false);
             this.searchPanel.ResumeLayout(false);
             this.searchPanel.PerformLayout();
@@ -120,5 +150,7 @@
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchText;
         private System.Windows.Forms.RichTextBox jsonTextBox;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button copyButton;
     }
 }

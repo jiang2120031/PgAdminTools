@@ -52,9 +52,7 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.searchByIDpPanel = new System.Windows.Forms.Panel();
             this.idTextBox = new System.Windows.Forms.TextBox();
-            this.btnCopy = new System.Windows.Forms.Button();
             this.idLabel = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
             this.idButton = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -270,9 +268,7 @@
             // searchByIDpPanel
             // 
             this.searchByIDpPanel.Controls.Add(this.idTextBox);
-            this.searchByIDpPanel.Controls.Add(this.btnCopy);
             this.searchByIDpPanel.Controls.Add(this.idLabel);
-            this.searchByIDpPanel.Controls.Add(this.btnSave);
             this.searchByIDpPanel.Controls.Add(this.idButton);
             this.searchByIDpPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.searchByIDpPanel.Location = new System.Drawing.Point(0, 0);
@@ -289,17 +285,6 @@
             this.idTextBox.Size = new System.Drawing.Size(243, 20);
             this.idTextBox.TabIndex = 5;
             // 
-            // btnCopy
-            // 
-            this.btnCopy.Location = new System.Drawing.Point(132, 30);
-            this.btnCopy.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(102, 25);
-            this.btnCopy.TabIndex = 6;
-            this.btnCopy.Text = "Copy to clipboard";
-            this.btnCopy.UseVisualStyleBackColor = true;
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
-            // 
             // idLabel
             // 
             this.idLabel.AutoSize = true;
@@ -311,17 +296,6 @@
             this.idLabel.Size = new System.Drawing.Size(24, 13);
             this.idLabel.TabIndex = 4;
             this.idLabel.Text = "ID:";
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(64, 30);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(64, 25);
-            this.btnSave.TabIndex = 5;
-            this.btnSave.Text = "Save File";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);          
             // 
             // idButton
             // 
@@ -335,9 +309,9 @@
             this.idButton.TabIndex = 3;
             this.idButton.Text = "Search";
             this.idButton.UseVisualStyleBackColor = true;
-            this.idButton.Click += new System.EventHandler(this.logButton_Click);
+            this.idButton.Click += new System.EventHandler(this.idButton_Click);
             // 
-            // DetailForm
+            // TableListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -349,7 +323,7 @@
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "DetailForm";
+            this.Name = "TableListForm";
             this.Text = "Detail";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.searchPanel.ResumeLayout(false);
@@ -390,8 +364,6 @@
         private System.Windows.Forms.ToolStripTextBox pageToolStripText;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripTextBox totalCountsBox;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button logButton;
     }
 }
