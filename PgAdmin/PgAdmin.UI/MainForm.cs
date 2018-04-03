@@ -55,7 +55,7 @@ namespace PgAdmin.UI
             detailForm.TableName = menuTreeForm.TableName;
         }
 
-        DetailForm detailForm = new DetailForm();
+        TableListForm detailForm = new TableListForm();
         MenuTreeForm menuTreeForm = new MenuTreeForm();
         #region FIELDS
         private ILogger logger = LogManager.GetLogger("PgAdmin");
