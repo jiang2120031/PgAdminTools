@@ -137,5 +137,6 @@ namespace PgAdmin.UI
             else
                 InitMenuTree();
         }
+
     }
 }

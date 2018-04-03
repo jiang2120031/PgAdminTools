@@ -77,6 +77,8 @@ namespace PgAdmin.UI
                         MySelect(jsonTextBox, Match.Index, searchText.Text, Color.CadetBlue);
 
                     }
+                    jsonTextBox.Select(Matches[0].Index, searchText.Text.Length);
+                    jsonTextBox.Focus();
                 }
             }
             catch (Exception ex)
