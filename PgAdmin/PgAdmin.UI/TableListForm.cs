@@ -134,35 +134,22 @@ namespace PgAdmin.UI
             }
             bindingSource1.DataSource = dtTemp;
             dataGridView.DataSource = bindingSource1;
-            AddExportButton();
+
         }
 
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0 && dataGridView.Rows[e.RowIndex].Cells.Count > 2 && ContainsColumn("data"))
             {
-                var title = dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                var title = dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
                 if (!String.IsNullOrEmpty(title))
                 {
-                    JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString());
+                    JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
                     ShowJsonForm(jo);
                 }
             }
         }
-        private void AddExportButton()
-        {
 
-            if (!ContainsColumn("Export"))
-            {
-                DataGridViewButtonColumn Column1 = new DataGridViewButtonColumn();
-                Column1.HeaderText = "Export";
-                Column1.UseColumnTextForButtonValue = true;
-                Column1.Text = "Export";
-                this.dataGridView.Columns.Add(Column1);
-            }
-
-
-        }
         private bool ContainsColumn(string containsValue)
         {
             foreach (DataGridViewColumn item in dataGridView.Columns)
@@ -300,22 +287,39 @@ namespace PgAdmin.UI
 
         private void logButton_Click(object sender, EventArgs e)
         {
-            var path = Environment.CurrentDirectory + "\\logs\\";
-            path += GetLatestFileTimeInfo(path) + "\\logs";
-            DirectoryInfo logs = new DirectoryInfo(path);
-            FileInfo[] fileInfo = logs.GetFiles("Error.log");
-            if (fileInfo != null)
+            try
             {
-                string log = "";
-                foreach (FileInfo temp in fileInfo)
+                var path = Environment.CurrentDirectory + "\\logs\\";
+                var logsfilename = GetLatestFileTimeInfo(path);
+                if (!String.IsNullOrEmpty(logsfilename))
                 {
-                    using (StreamReader sr = temp.OpenText())
+                    path += logsfilename + "\\logs";
+                    DirectoryInfo logs = new DirectoryInfo(path);
+                    FileInfo[] fileInfo = logs.GetFiles("Error.log");
+                    if (fileInfo != null)
                     {
-                        log += sr.ReadToEnd();
+                        string log = "";
+                        foreach (FileInfo temp in fileInfo)
+                        {
+                            using (StreamReader sr = temp.OpenText())
+                            {
+                                log += sr.ReadToEnd();
+                            }
+                        }
+                        MessageBox.Show(log);
                     }
                 }
-                MessageBox.Show(log);
+                else
+                {
+                    MessageBox.Show("No logs!");
+                }
             }
+            catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, "CurrentPageSizeSetError:" + ex.Message);
+                return;
+            }
+
         }
 
 
@@ -351,18 +355,26 @@ namespace PgAdmin.UI
         {
             List<DateTime> dateList = new List<DateTime>();
             DirectoryInfo search = new DirectoryInfo(dir);
-            FileSystemInfo[] fsinfos = search.GetFileSystemInfos();
-            foreach (FileSystemInfo fsinfo in fsinfos)
+            if (Directory.Exists(dir) && Directory.GetFiles(dir).Length > 0)
             {
-                if (fsinfo is DirectoryInfo)
+                FileSystemInfo[] fsinfos = search.GetFileSystemInfos();
+                foreach (FileSystemInfo fsinfo in fsinfos)
                 {
-                    dateList.Add(fsinfo.CreationTime);
+                    if (fsinfo is DirectoryInfo)
+                    {
+                        dateList.Add(fsinfo.CreationTime);
+                    }
                 }
-
+                dateList.Sort();
+                var date = dateList[dateList.Count - 1].ToString("yyyy-MM-dd");
+                return date;
             }
-            dateList.Sort();
-            var date = dateList[dateList.Count - 1].ToString("yyyy-MM-dd");
-            return date;
+            else
+            {
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+                return string.Empty;
+            }
         }
 
         #region FIELDS
@@ -375,6 +387,6 @@ namespace PgAdmin.UI
         private ILogger logger = LogManager.GetLogger("DetailForm");
         #endregion
 
-        
+
     }
 }

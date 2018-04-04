@@ -36,30 +36,32 @@
             // 
             this.MenuPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.MenuPanel.Location = new System.Drawing.Point(0, 0);
-            this.MenuPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MenuPanel.Margin = new System.Windows.Forms.Padding(4);
             this.MenuPanel.Name = "MenuPanel";
-            this.MenuPanel.Size = new System.Drawing.Size(267, 1027);
+            this.MenuPanel.Size = new System.Drawing.Size(267, 862);
             this.MenuPanel.TabIndex = 0;
             // 
             // tablePanel
             // 
             this.tablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablePanel.Location = new System.Drawing.Point(267, 0);
-            this.tablePanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tablePanel.Margin = new System.Windows.Forms.Padding(4);
             this.tablePanel.Name = "tablePanel";
-            this.tablePanel.Size = new System.Drawing.Size(869, 862);
+            this.tablePanel.Size = new System.Drawing.Size(842, 862);
             this.tablePanel.TabIndex = 5;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 862);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.MenuPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "PgAdminTool";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }

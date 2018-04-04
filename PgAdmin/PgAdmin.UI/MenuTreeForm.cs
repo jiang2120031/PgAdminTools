@@ -13,6 +13,7 @@ using PgAdmin.Services;
 using PgAdmin.Services.Model;
 using System.Configuration;
 using NLog;
+using System.Text.RegularExpressions;
 
 namespace PgAdmin.UI
 {
@@ -45,7 +46,7 @@ namespace PgAdmin.UI
 
         public string DataName { get; set; }
         public string TableName { get; set; }
-
+        List<DbName> dbTrees;
 
         private List<DbName> GetDBDocuments(string sql)
         {
@@ -77,12 +78,12 @@ namespace PgAdmin.UI
                 return null;
             }
         }
-
+      
         private void InitMenuTree()
         {
             treeView.Nodes.Clear();
-            var ds = GetDBDocuments(@"SELECT datname FROM pg_database");
-            UpdateMenuTree(ds);
+            dbTrees = GetDBDocuments(@"SELECT datname FROM pg_database");
+            UpdateMenuTree(dbTrees);
         }
 
         private void UpdateMenuTree(List<DbName> dbnames)
@@ -94,7 +95,8 @@ namespace PgAdmin.UI
                 {
                     TreeNode mytreenode = new TreeNode();
                     mytreenode.Text = item.DName;
-
+                    if (item.IsSelected)
+                        mytreenode.BackColor = Color.Blue;
                     foreach (var itemchild in item.TName)
                     {
                         TreeNode childnode = new TreeNode();
@@ -106,7 +108,7 @@ namespace PgAdmin.UI
                 }
             }
         }
-
+        
         private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (treeView.SelectedNode != null && treeView.SelectedNode.Level == 1)
@@ -116,21 +118,28 @@ namespace PgAdmin.UI
                 TableName = treeView.SelectedNode.Text;
                 updateTable();
             }
-
         }
 
-        private void searchButton_Click(object sender, EventArgs e)
-        {
+
+        private void databaseBox_TextChanged(object sender, EventArgs e)
+        {            
             if (!String.IsNullOrEmpty(databaseBox.Text))
             {
                 try
                 {
-                    var sql = string.Format(@"SELECT u.datname  FROM pg_catalog.pg_database u where u.datname='" + databaseBox.Text + "';");
-                    var ds = GetDBDocuments(sql);
-                    if (ds != null && ds.Count > 0)
-                        UpdateMenuTree(ds);
-                    else
-                        MessageBox.Show("Open the database is failed, please confirm the case is correct.");
+                    DbName[] dbTemp = new DbName[dbTrees.Count];
+                    dbTrees.CopyTo(dbTemp);
+                    foreach (var item in dbTemp)
+                    {
+                        if (item.DName.Contains(databaseBox.Text))
+                        {
+                            item.IsSelected = true;
+                        }
+                        else
+                            item.IsSelected = false;
+                    }
+
+                    UpdateMenuTree(dbTemp.ToList());
                 }
                 catch (Exception ex)
                 {
@@ -140,6 +149,5 @@ namespace PgAdmin.UI
             else
                 InitMenuTree();
         }
-
     }
 }

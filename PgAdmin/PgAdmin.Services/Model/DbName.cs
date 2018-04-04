@@ -14,6 +14,7 @@ namespace PgAdmin.Services.Model
         }
 
         public string DName { get; set; }
+        public bool IsSelected = false;
 
         public IList<TableName> TName { get; set; }
     }

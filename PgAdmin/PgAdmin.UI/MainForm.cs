@@ -18,7 +18,7 @@ namespace PgAdmin.UI
             try
             {
                 InitializeComponent();
-                this.StartPosition = FormStartPosition.CenterScreen;
+                this.Size = Screen.PrimaryScreen.WorkingArea.Size;
                 FormLayout();
                 menuTreeForm.updateTable += new UpdateDelegate(UpdateDetailTable);
                 menuTreeForm.updateTable.Invoke();
@@ -42,10 +42,11 @@ namespace PgAdmin.UI
             detailForm.Show();
             detailForm.Dock = DockStyle.Fill;
             detailForm.FormBorderStyle = FormBorderStyle.None;
+            FormResize();
         }
         private void FormResize()
         {
-            MenuPanel.Width = this.Width / 5;
+            MenuPanel.Width =  this.Width / 5;
         }
 
         public void UpdateDetailTable()
