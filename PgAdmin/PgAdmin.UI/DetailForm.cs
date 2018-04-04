@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using NLog;
+using System.IO;
 
 namespace PgAdmin.UI
 {
@@ -96,10 +97,28 @@ namespace PgAdmin.UI
         }
 
         private void saveButton_Click(object sender, EventArgs e)
-        {           
-            FileForm fileForm = new FileForm();
-            fileForm.jsonFileStr = jobject.ToString();
-            fileForm.ShowDialog();
+        {
+            //FileForm fileForm = new FileForm();
+            //fileForm.jsonFileStr = jobject.ToString();
+            //fileForm.ShowDialog();
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog1.Filter = ".json|*.json|All files (*.*)|*.*";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string SaveFileName = saveFileDialog1.FileName;
+                FileStream fs = File.Create(SaveFileName);
+                Encoding encode = Encoding.UTF8;
+                StreamWriter streamWriter = new StreamWriter(fs, encode);
+
+                streamWriter.Write(jobject.ToString());
+                streamWriter.Flush();
+                streamWriter.Close();
+                fs.Close();
+
+                MessageBox.Show("Save the file successfully.");
+            }
+
         }
     }
 }

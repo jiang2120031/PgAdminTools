@@ -136,7 +136,10 @@ namespace PgAdmin.UI
             }
             bindingSource1.DataSource = dtTemp;
             dataGridView.DataSource = bindingSource1;
-            AddExportButton();
+            if (dt.Rows.Count > 0)
+            {
+                AddExportButton();
+            }
         }
 
         private void dataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -160,11 +163,15 @@ namespace PgAdmin.UI
                 Column1.HeaderText = "Export";
                 Column1.UseColumnTextForButtonValue = true;
                 Column1.Text = "Export";
+
                 this.dataGridView.Columns.Add(Column1);
             }
 
 
         }
+
+
+
         private bool ContainsColumn(string containsValue)
         {
             foreach (DataGridViewColumn item in dataGridView.Columns)
@@ -375,8 +382,40 @@ namespace PgAdmin.UI
         int nMax = 0;
         DataTable dtTemp;
         private ILogger logger = LogManager.GetLogger("DetailForm");
+
         #endregion
 
-        
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var c1 = dataGridView.Columns[e.ColumnIndex];
+            if (c1.HeaderText == "Export")
+            {
+                if (e.RowIndex >= 0 && dataGridView.Rows[e.RowIndex].Cells.Count > 2 && ContainsColumn("data"))
+                {
+                    var title = dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    if (!String.IsNullOrEmpty(title))
+                    {
+                        JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString());
+                        saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        saveFileDialog1.Filter = ".json|*.json|All files (*.*)|*.*";
+
+                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            string SaveFileName = saveFileDialog1.FileName;
+                            FileStream fs = File.Create(SaveFileName);
+                            Encoding encode = Encoding.UTF8;
+                            StreamWriter streamWriter = new StreamWriter(fs, encode);
+
+                            streamWriter.Write(jo.ToString());
+                            streamWriter.Flush();
+                            streamWriter.Close();
+                            fs.Close();
+
+                            MessageBox.Show("Save the file successfully.");
+                        }
+                    }
+                }
+            }
+        }
     }
 }

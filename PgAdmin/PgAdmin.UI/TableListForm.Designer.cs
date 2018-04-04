@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableListForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.searchPanel = new System.Windows.Forms.Panel();
@@ -55,6 +55,7 @@
             this.idLabel = new System.Windows.Forms.Label();
             this.idButton = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.searchPanel.SuspendLayout();
             this.pageSearchPanel.SuspendLayout();
@@ -69,19 +70,21 @@
             this.dataGridView.AllowUserToOrderColumns = true;
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView.Location = new System.Drawing.Point(0, 58);
+            this.dataGridView.Location = new System.Drawing.Point(0, 71);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(1068, 358);
+            this.dataGridView.Size = new System.Drawing.Size(1424, 441);
             this.dataGridView.TabIndex = 4;
+            this.dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellContentClick);
             this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDoubleClick);
             // 
             // searchPanel
@@ -92,8 +95,9 @@
             this.searchPanel.Controls.Add(this.searchByIDpPanel);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.searchPanel.Location = new System.Drawing.Point(0, 0);
+            this.searchPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(1068, 58);
+            this.searchPanel.Size = new System.Drawing.Size(1424, 71);
             this.searchPanel.TabIndex = 3;
             // 
             // logButton
@@ -102,10 +106,10 @@
             this.logButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.logButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.logButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.logButton.Location = new System.Drawing.Point(544, 0);
-            this.logButton.Margin = new System.Windows.Forms.Padding(2);
+            this.logButton.Location = new System.Drawing.Point(725, 0);
+            this.logButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.logButton.Name = "logButton";
-            this.logButton.Size = new System.Drawing.Size(60, 58);
+            this.logButton.Size = new System.Drawing.Size(80, 71);
             this.logButton.TabIndex = 8;
             this.logButton.Text = "DebugLogs";
             this.logButton.UseVisualStyleBackColor = true;
@@ -115,10 +119,10 @@
             // 
             this.pageSearchPanel.Controls.Add(this.bindingNavigator1);
             this.pageSearchPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pageSearchPanel.Location = new System.Drawing.Point(604, 0);
-            this.pageSearchPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.pageSearchPanel.Location = new System.Drawing.Point(805, 0);
+            this.pageSearchPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pageSearchPanel.Name = "pageSearchPanel";
-            this.pageSearchPanel.Size = new System.Drawing.Size(464, 58);
+            this.pageSearchPanel.Size = new System.Drawing.Size(619, 71);
             this.pageSearchPanel.TabIndex = 4;
             // 
             // bindingNavigator1
@@ -152,7 +156,7 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.pageToolStripText;
-            this.bindingNavigator1.Size = new System.Drawing.Size(464, 58);
+            this.bindingNavigator1.Size = new System.Drawing.Size(619, 71);
             this.bindingNavigator1.TabIndex = 6;
             this.bindingNavigator1.Text = "bindingNavigator1";
             this.bindingNavigator1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bindingNavigator1_ItemClicked);
@@ -163,7 +167,7 @@
             this.totalCountLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalCountLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.totalCountLabel.Name = "totalCountLabel";
-            this.totalCountLabel.Size = new System.Drawing.Size(27, 55);
+            this.totalCountLabel.Size = new System.Drawing.Size(37, 68);
             this.totalCountLabel.Text = "/{0}";
             this.totalCountLabel.ToolTipText = "Total number of pages\r\n";
             // 
@@ -171,14 +175,14 @@
             // 
             this.toolStripLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(76, 55);
+            this.toolStripLabel3.Size = new System.Drawing.Size(98, 68);
             this.toolStripLabel3.Text = "TotalCounts:";
             // 
             // totalCountsBox
             // 
             this.totalCountsBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalCountsBox.Name = "totalCountsBox";
-            this.totalCountsBox.Size = new System.Drawing.Size(38, 58);
+            this.totalCountsBox.Size = new System.Drawing.Size(49, 71);
             // 
             // toolStripLabel1
             // 
@@ -186,20 +190,20 @@
             this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripLabel1.ForeColor = System.Drawing.SystemColors.Control;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(109, 55);
+            this.toolStripLabel1.Size = new System.Drawing.Size(135, 68);
             this.toolStripLabel1.Text = "  CurrentPageSize:";
             // 
             // pageSizeText
             // 
             this.pageSizeText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageSizeText.Name = "pageSizeText";
-            this.pageSizeText.Size = new System.Drawing.Size(30, 58);
+            this.pageSizeText.Size = new System.Drawing.Size(39, 71);
             this.pageSizeText.TextChanged += new System.EventHandler(this.pageSizeText_TextChanged);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(0, 55);
+            this.toolStripLabel2.Size = new System.Drawing.Size(0, 68);
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -208,7 +212,7 @@
             this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(24, 55);
+            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(24, 68);
             this.bindingNavigatorMoveFirstItem.Text = "Move first";
             // 
             // bindingNavigatorMovePreviousItem
@@ -218,13 +222,13 @@
             this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(24, 55);
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(24, 68);
             this.bindingNavigatorMovePreviousItem.Text = "Move previous";
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 58);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 71);
             // 
             // pageToolStripText
             // 
@@ -232,7 +236,7 @@
             this.pageToolStripText.AutoSize = false;
             this.pageToolStripText.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageToolStripText.Name = "pageToolStripText";
-            this.pageToolStripText.Size = new System.Drawing.Size(50, 23);
+            this.pageToolStripText.Size = new System.Drawing.Size(65, 27);
             this.pageToolStripText.Text = "0";
             this.pageToolStripText.ToolTipText = "Current position\r\n";
             this.pageToolStripText.TextChanged += new System.EventHandler(this.bindingNavigatorPositionItem_TextChanged);
@@ -240,7 +244,7 @@
             // bindingNavigatorSeparator1
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 58);
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 71);
             // 
             // bindingNavigatorMoveNextItem
             // 
@@ -248,7 +252,7 @@
             this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(24, 55);
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(24, 68);
             this.bindingNavigatorMoveNextItem.Text = "Move next";
             // 
             // bindingNavigatorMoveLastItem
@@ -257,13 +261,13 @@
             this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(24, 55);
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(24, 68);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 58);
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 71);
             // 
             // searchByIDpPanel
             // 
@@ -272,17 +276,18 @@
             this.searchByIDpPanel.Controls.Add(this.idButton);
             this.searchByIDpPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.searchByIDpPanel.Location = new System.Drawing.Point(0, 0);
+            this.searchByIDpPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.searchByIDpPanel.Name = "searchByIDpPanel";
-            this.searchByIDpPanel.Size = new System.Drawing.Size(424, 58);
+            this.searchByIDpPanel.Size = new System.Drawing.Size(565, 71);
             this.searchByIDpPanel.TabIndex = 3;
             // 
             // idTextBox
             // 
             this.idTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.idTextBox.Location = new System.Drawing.Point(22, 6);
-            this.idTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.idTextBox.Location = new System.Drawing.Point(29, 7);
+            this.idTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.idTextBox.Name = "idTextBox";
-            this.idTextBox.Size = new System.Drawing.Size(243, 20);
+            this.idTextBox.Size = new System.Drawing.Size(323, 23);
             this.idTextBox.TabIndex = 5;
             // 
             // idLabel
@@ -290,10 +295,9 @@
             this.idLabel.AutoSize = true;
             this.idLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.idLabel.Location = new System.Drawing.Point(2, 10);
-            this.idLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.idLabel.Location = new System.Drawing.Point(3, 12);
             this.idLabel.Name = "idLabel";
-            this.idLabel.Size = new System.Drawing.Size(24, 13);
+            this.idLabel.Size = new System.Drawing.Size(28, 17);
             this.idLabel.TabIndex = 4;
             this.idLabel.Text = "ID:";
             // 
@@ -302,10 +306,10 @@
             this.idButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.idButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.idButton.Location = new System.Drawing.Point(269, 6);
-            this.idButton.Margin = new System.Windows.Forms.Padding(2);
+            this.idButton.Location = new System.Drawing.Point(359, 7);
+            this.idButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.idButton.Name = "idButton";
-            this.idButton.Size = new System.Drawing.Size(75, 23);
+            this.idButton.Size = new System.Drawing.Size(100, 28);
             this.idButton.TabIndex = 3;
             this.idButton.Text = "Search";
             this.idButton.UseVisualStyleBackColor = true;
@@ -313,16 +317,16 @@
             // 
             // TableListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1068, 416);
+            this.ClientSize = new System.Drawing.Size(1424, 512);
             this.ControlBox = false;
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.searchPanel);
             this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "TableListForm";
             this.Text = "Detail";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
@@ -365,5 +369,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripTextBox totalCountsBox;
         private System.Windows.Forms.Button logButton;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
