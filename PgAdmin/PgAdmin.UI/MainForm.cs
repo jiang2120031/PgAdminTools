@@ -18,6 +18,7 @@ namespace PgAdmin.UI
             try
             {
                 InitializeComponent();
+                this.StartPosition = FormStartPosition.CenterScreen;
                 FormLayout();
                 menuTreeForm.updateTable += new UpdateDelegate(UpdateDetailTable);
                 menuTreeForm.updateTable.Invoke();
