@@ -64,11 +64,12 @@ namespace PgAdmin.UI
         private DataTable GetDetailDocuments(string tablename, string database)
         {
             try
-            { var sql = @"SELECT * FROM " + tablename;
-            var dbConnStr = string.Format("Host=localhost;Database={0};Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;", database);
-            var dataTable = new DataTable();
-            dataTable.Load(postgresHelper.ExecuteReader(dbConnStr, System.Data.CommandType.Text, sql));
-            return dataTable;
+            {
+                var sql = @"SELECT * FROM " + tablename;
+                var dbConnStr = string.Format("Host=localhost;Database={0};Port=5432;Username=postgres;Password=123456;Pooling=true;MaxPoolSize=1024;", database);
+                var dataTable = new DataTable();
+                dataTable.Load(postgresHelper.ExecuteReader(dbConnStr, System.Data.CommandType.Text, sql));
+                return dataTable;
             }
             catch (Exception e)
             {
@@ -124,10 +125,12 @@ namespace PgAdmin.UI
             {
                 try
                 {
-                    var sql = string.Format(@"SELECT u.datname  FROM pg_catalog.pg_database u where u.datname='"+databaseBox.Text+"';");
+                    var sql = string.Format(@"SELECT u.datname  FROM pg_catalog.pg_database u where u.datname='" + databaseBox.Text + "';");
                     var ds = GetDBDocuments(sql);
-                    UpdateMenuTree(ds);
-
+                    if (ds != null && ds.Count > 0)
+                        UpdateMenuTree(ds);
+                    else
+                        MessageBox.Show("Open the database is failed, please confirm the case is correct.");
                 }
                 catch (Exception ex)
                 {
