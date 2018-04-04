@@ -81,7 +81,7 @@ namespace PgAdmin.UI
         private void InitMenuTree()
         {
             treeView.Nodes.Clear();
-            var ds = GetDBDocuments(@"SELECT datname FROM pg_database");
+            var ds = GetDBDocuments(@"SELECT datname FROM pg_database order by datname ");
             UpdateMenuTree(ds);
         }
 
