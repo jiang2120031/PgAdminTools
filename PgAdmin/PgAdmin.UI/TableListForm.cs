@@ -108,13 +108,15 @@ namespace PgAdmin.UI
             dtTemp = dataTable.Clone();
 
             SetButton();
-
-            if (pageCurrent == pageCount)
+            if (dt.Rows.Count > 0)
             {
-                nEndPos = nMax;
+                if (pageCurrent == pageCount)
+                {
+                    nEndPos = nMax;
+                }
+                else
+                    nEndPos = pageSize * pageCurrent;
             }
-            else
-                nEndPos = pageSize * pageCurrent;
 
             nStartPos = nCurrent;
 
@@ -385,6 +387,7 @@ namespace PgAdmin.UI
         int nMax = 0;
         DataTable dtTemp;
         private ILogger logger = LogManager.GetLogger("DetailForm");
+
         #endregion
 
 

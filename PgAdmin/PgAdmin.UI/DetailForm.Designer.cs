@@ -31,10 +31,11 @@
             this.JsonPanel = new System.Windows.Forms.Panel();
             this.jsonTextBox = new System.Windows.Forms.RichTextBox();
             this.searchPanel = new System.Windows.Forms.Panel();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.copyButton = new System.Windows.Forms.Button();
             this.searchButton = new System.Windows.Forms.Button();
             this.searchText = new System.Windows.Forms.TextBox();
-            this.copyButton = new System.Windows.Forms.Button();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.JsonPanel.SuspendLayout();
             this.searchPanel.SuspendLayout();
             this.SuspendLayout();
@@ -79,6 +80,32 @@
             this.searchPanel.Size = new System.Drawing.Size(884, 64);
             this.searchPanel.TabIndex = 1;
             // 
+            // saveButton
+            // 
+            this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveButton.Location = new System.Drawing.Point(660, 20);
+            this.saveButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(108, 34);
+            this.saveButton.TabIndex = 3;
+            this.saveButton.Text = "Save As";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // copyButton
+            // 
+            this.copyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.copyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyButton.Location = new System.Drawing.Point(520, 20);
+            this.copyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(79, 34);
+            this.copyButton.TabIndex = 2;
+            this.copyButton.Text = "Copy";
+            this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Click += new System.EventHandler(this.copyButton_Click);
+            // 
             // searchButton
             // 
             this.searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -86,7 +113,7 @@
             this.searchButton.Location = new System.Drawing.Point(381, 20);
             this.searchButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(79, 26);
+            this.searchButton.Size = new System.Drawing.Size(92, 30);
             this.searchButton.TabIndex = 1;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
@@ -98,38 +125,12 @@
             this.searchText.Location = new System.Drawing.Point(20, 20);
             this.searchText.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchText.Name = "searchText";
-            this.searchText.Size = new System.Drawing.Size(350, 26);
+            this.searchText.Size = new System.Drawing.Size(350, 30);
             this.searchText.TabIndex = 0;
-            // 
-            // copyButton
-            // 
-            this.copyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.copyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyButton.Location = new System.Drawing.Point(520, 20);
-            this.copyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.copyButton.Name = "copyButton";
-            this.copyButton.Size = new System.Drawing.Size(79, 26);
-            this.copyButton.TabIndex = 2;
-            this.copyButton.Text = "Copy";
-            this.copyButton.UseVisualStyleBackColor = true;
-            this.copyButton.Click += new System.EventHandler(this.copyButton_Click);
-            // 
-            // saveButton
-            // 
-            this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(660, 20);
-            this.saveButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(79, 26);
-            this.saveButton.TabIndex = 3;
-            this.saveButton.Text = "Save";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // DetailForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 662);
             this.Controls.Add(this.JsonPanel);
@@ -152,5 +153,6 @@
         private System.Windows.Forms.RichTextBox jsonTextBox;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button copyButton;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

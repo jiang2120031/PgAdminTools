@@ -97,6 +97,8 @@ namespace PgAdmin.UI
                     mytreenode.Text = item.DName;
                     if (item.IsSelected)
                         mytreenode.BackColor = Color.Blue;
+                    else
+                        mytreenode.BackColor = treeView.BackColor;
                     foreach (var itemchild in item.TName)
                     {
                         TreeNode childnode = new TreeNode();
