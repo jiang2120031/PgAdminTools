@@ -38,7 +38,7 @@ namespace PgAdmin.Services
         {
             IList<TableName> tNameS = new List<TableName>();
             var findTable = postgresHelper.ExecuteQuery(connectionString, cmdType,
-                @"SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'", null);
+                @"SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'  order by lower(table_name)   ", null);
             foreach (DataRow tableNameS in findTable.Tables[0].Rows)
             {
                 tNameS.Add(
