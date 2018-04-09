@@ -181,14 +181,19 @@ namespace PgAdmin.UI
                     ClientQueryService clientQueryService = new ClientQueryService();
                     var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
                         CommandType.Text, null).Data;
-                    JObject jo = (JObject)JsonConvert.DeserializeObject(result);
-                    ShowJsonForm(jo);
+                    if (result != null)
+                    {
+                        JObject jo = (JObject)JsonConvert.DeserializeObject(result);
+                        ShowJsonForm(jo);
+                    }
+                    else
+                        MessageBox.Show("Please enter valid id", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
             }
             catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, "idSearchError:" + ex.Message);
-                MessageBox.Show("error occoured when query data,please ensure you have selected the right table", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
