@@ -36,6 +36,7 @@
             this.searchButton = new System.Windows.Forms.Button();
             this.searchText = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btnSaveDb = new System.Windows.Forms.Button();
             this.JsonPanel.SuspendLayout();
             this.searchPanel.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +70,7 @@
             // searchPanel
             // 
             this.searchPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.searchPanel.Controls.Add(this.btnSaveDb);
             this.searchPanel.Controls.Add(this.saveButton);
             this.searchPanel.Controls.Add(this.copyButton);
             this.searchPanel.Controls.Add(this.searchButton);
@@ -84,7 +86,7 @@
             // 
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(660, 20);
+            this.saveButton.Location = new System.Drawing.Point(763, 20);
             this.saveButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(108, 34);
@@ -97,7 +99,7 @@
             // 
             this.copyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyButton.Location = new System.Drawing.Point(520, 20);
+            this.copyButton.Location = new System.Drawing.Point(663, 18);
             this.copyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(79, 34);
@@ -128,6 +130,19 @@
             this.searchText.Size = new System.Drawing.Size(350, 30);
             this.searchText.TabIndex = 0;
             // 
+            // btnSaveDb
+            // 
+            this.btnSaveDb.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSaveDb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveDb.Location = new System.Drawing.Point(497, 18);
+            this.btnSaveDb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSaveDb.Name = "btnSaveDb";
+            this.btnSaveDb.Size = new System.Drawing.Size(138, 34);
+            this.btnSaveDb.TabIndex = 4;
+            this.btnSaveDb.Text = "Save to Db";
+            this.btnSaveDb.UseVisualStyleBackColor = true;
+            this.btnSaveDb.Click += new System.EventHandler(this.btnSaveDb_Click);
+            // 
             // DetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -154,5 +169,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button btnSaveDb;
     }
 }

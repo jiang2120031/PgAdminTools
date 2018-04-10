@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using NLog;
 using System.IO;
+using PgAdmin.Services;
 
 namespace PgAdmin.UI
 {
@@ -119,6 +120,34 @@ namespace PgAdmin.UI
                 MessageBox.Show("Save the file successfully.");
             }
 
+        }
+
+        public string DataName { get; set; }
+        public string TableName { get; set; }
+        public string DbId { get; set; }
+        public TableListForm pForm { get; set; }
+
+        private void btnSaveDb_Click(object sender, EventArgs e)
+        {
+            JObject saveObj = null;
+            try
+            {
+                saveObj = (JObject)JsonConvert.DeserializeObject(jsonTextBox.Text);
+                
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("json format error.");
+                return;
+            }
+            ClientQueryService postgresHelper = new ClientQueryService();
+
+            int i= postgresHelper.UpdateInfoById(DbId, DataName, TableName, saveObj);
+            if(i>0)
+            {
+                pForm.refreshDataTable();
+                MessageBox.Show("Save data to database successfully.");
+            }
         }
     }
 }

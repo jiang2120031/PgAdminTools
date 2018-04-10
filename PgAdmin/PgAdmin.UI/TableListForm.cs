@@ -40,6 +40,10 @@ namespace PgAdmin.UI
             }
         }
 
+        public void refreshDataTable()
+        {
+            DetailDataTable = GetDetailDocuments(TableName, DataName);
+        }
 
         public string DataName { get; set; }
         public string TableName { get; set; }
@@ -147,7 +151,8 @@ namespace PgAdmin.UI
                 if (!String.IsNullOrEmpty(title))
                 {
                     JObject jo = (JObject)JsonConvert.DeserializeObject(dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
-                    ShowJsonForm(jo);
+                    string id = dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    ShowJsonForm(jo, id);
                 }
             }
         }
@@ -180,11 +185,11 @@ namespace PgAdmin.UI
                 {
                     ClientQueryService clientQueryService = new ClientQueryService();
                     var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
-                        CommandType.Text, null).Data;
+                        CommandType.Text, null);
                     if (result != null)
                     {
-                        JObject jo = (JObject)JsonConvert.DeserializeObject(result);
-                        ShowJsonForm(jo);
+                        JObject jo = (JObject)JsonConvert.DeserializeObject(result.Data);
+                        ShowJsonForm(jo,result.Id);
                     }
                     else
                         MessageBox.Show("Please enter valid id", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -341,7 +346,7 @@ namespace PgAdmin.UI
              objNumberPattern.IsMatch(strNumber);
         }
 
-        private void ShowJsonForm(JObject jo)
+        private void ShowJsonForm(JObject jo,string id)
         {
             try
             {
@@ -349,6 +354,10 @@ namespace PgAdmin.UI
                 jsonForm.JsonData = jo;
                 jsonForm.Title = idTextBox.Text;
                 jsonForm.StartPosition = FormStartPosition.CenterScreen;
+                jsonForm.DbId = id;
+                jsonForm.DataName = this.DataName;
+                jsonForm.TableName = this.TableName;
+                jsonForm.pForm = this;
                 jsonForm.Show();
                 jsonForm.Focus();
             }
@@ -381,6 +390,24 @@ namespace PgAdmin.UI
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 return string.Empty;
+            }
+        }
+
+        private DataTable GetDetailDocuments(string tablename, string database)
+        {
+            try
+            {
+                ClientQueryService postgresHelper = new ClientQueryService();
+                var sql = @"SELECT * FROM " + tablename;
+                var dbConnStr = postgresHelper.ConnString+ database;
+                var dataTable = new DataTable();
+                dataTable.Load(postgresHelper.ExecuteReader(dbConnStr, System.Data.CommandType.Text, sql));
+                return dataTable;
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "GetDetailDocuments:" + e.Message);
+                return null;
             }
         }
 
