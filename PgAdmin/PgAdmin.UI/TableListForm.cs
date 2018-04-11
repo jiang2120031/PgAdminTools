@@ -301,11 +301,11 @@ namespace PgAdmin.UI
         {
             try
             {
-                var path = Environment.CurrentDirectory + "\\logs\\";
+                var path = Environment.CurrentDirectory + "\\logs";
                 var logsfilename = GetLatestFileTimeInfo(path);
                 if (!String.IsNullOrEmpty(logsfilename))
                 {
-                    path += logsfilename + "\\logs";
+                    path += "\\"+ logsfilename + "\\logs";
                     DirectoryInfo logs = new DirectoryInfo(path);
                     FileInfo[] fileInfo = logs.GetFiles("Error.log");
                     if (fileInfo != null)
@@ -360,6 +360,7 @@ namespace PgAdmin.UI
                 jsonForm.pForm = this;
                 jsonForm.Show();
                 jsonForm.Focus();
+                
             }
             catch (Exception ex)
             {
@@ -371,9 +372,11 @@ namespace PgAdmin.UI
         {
             List<DateTime> dateList = new List<DateTime>();
             DirectoryInfo search = new DirectoryInfo(dir);
-            if (Directory.Exists(dir) && Directory.GetFiles(dir).Length > 0)
+            FileSystemInfo[] fsinfos = search.GetFileSystemInfos();
+
+            if (Directory.Exists(dir) && fsinfos.Length > 0)
             {
-                FileSystemInfo[] fsinfos = search.GetFileSystemInfos();
+                
                 foreach (FileSystemInfo fsinfo in fsinfos)
                 {
                     if (fsinfo is DirectoryInfo)
