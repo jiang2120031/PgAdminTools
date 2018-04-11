@@ -133,7 +133,7 @@ namespace PgAdmin.UI
                     dbTrees.CopyTo(dbTemp);
                     foreach (var item in dbTemp)
                     {
-                        if (item.DName.Contains(databaseBox.Text))
+                        if (item.DName.ToLower().Contains(databaseBox.Text.ToLower()))
                         {
                             item.IsSelected = true;
                         }

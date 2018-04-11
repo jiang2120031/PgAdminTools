@@ -73,7 +73,7 @@ namespace PgAdmin.UI
                     Match m = r.Match(jsonTextBox.Text);
                     var gc = m.Groups;
 
-                    MatchCollection Matches = Regex.Matches(jsonTextBox.Text, searchText.Text);
+                    MatchCollection Matches = Regex.Matches(jsonTextBox.Text.ToLower(), searchText.Text.ToLower());
                     foreach (Match Match in Matches)
                     {
                         MySelect(jsonTextBox, Match.Index, searchText.Text, Color.CadetBlue);
