@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableListForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.searchPanel = new System.Windows.Forms.Panel();
@@ -56,6 +56,8 @@
             this.idButton = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtKeyword = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.searchPanel.SuspendLayout();
             this.pageSearchPanel.SuspendLayout();
@@ -70,21 +72,20 @@
             this.dataGridView.AllowUserToOrderColumns = true;
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 71);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(1424, 441);
             this.dataGridView.TabIndex = 4;
-            //this.dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellContentClick);
             this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDoubleClick);
             // 
             // searchPanel
@@ -95,7 +96,7 @@
             this.searchPanel.Controls.Add(this.searchByIDpPanel);
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.searchPanel.Location = new System.Drawing.Point(0, 0);
-            this.searchPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.searchPanel.Margin = new System.Windows.Forms.Padding(4);
             this.searchPanel.Name = "searchPanel";
             this.searchPanel.Size = new System.Drawing.Size(1424, 71);
             this.searchPanel.TabIndex = 3;
@@ -271,12 +272,14 @@
             // 
             // searchByIDpPanel
             // 
+            this.searchByIDpPanel.Controls.Add(this.txtKeyword);
+            this.searchByIDpPanel.Controls.Add(this.label1);
             this.searchByIDpPanel.Controls.Add(this.idTextBox);
             this.searchByIDpPanel.Controls.Add(this.idLabel);
             this.searchByIDpPanel.Controls.Add(this.idButton);
             this.searchByIDpPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.searchByIDpPanel.Location = new System.Drawing.Point(0, 0);
-            this.searchByIDpPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.searchByIDpPanel.Margin = new System.Windows.Forms.Padding(4);
             this.searchByIDpPanel.Name = "searchByIDpPanel";
             this.searchByIDpPanel.Size = new System.Drawing.Size(565, 71);
             this.searchByIDpPanel.TabIndex = 3;
@@ -284,10 +287,10 @@
             // idTextBox
             // 
             this.idTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.idTextBox.Location = new System.Drawing.Point(29, 7);
+            this.idTextBox.Location = new System.Drawing.Point(80, 4);
             this.idTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.idTextBox.Name = "idTextBox";
-            this.idTextBox.Size = new System.Drawing.Size(323, 23);
+            this.idTextBox.Size = new System.Drawing.Size(437, 23);
             this.idTextBox.TabIndex = 5;
             // 
             // idLabel
@@ -295,7 +298,7 @@
             this.idLabel.AutoSize = true;
             this.idLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.idLabel.Location = new System.Drawing.Point(3, 12);
+            this.idLabel.Location = new System.Drawing.Point(52, 7);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(28, 17);
             this.idLabel.TabIndex = 4;
@@ -306,14 +309,34 @@
             this.idButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.idButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.idButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.idButton.Location = new System.Drawing.Point(359, 7);
+            this.idButton.Location = new System.Drawing.Point(417, 30);
             this.idButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.idButton.Name = "idButton";
-            this.idButton.Size = new System.Drawing.Size(100, 28);
+            this.idButton.Size = new System.Drawing.Size(100, 25);
             this.idButton.TabIndex = 3;
             this.idButton.Text = "Search";
             this.idButton.UseVisualStyleBackColor = true;
             this.idButton.Click += new System.EventHandler(this.idButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(5, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 17);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Keyword:";
+            // 
+            // txtKeyword
+            // 
+            this.txtKeyword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtKeyword.Location = new System.Drawing.Point(81, 31);
+            this.txtKeyword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtKeyword.Name = "txtKeyword";
+            this.txtKeyword.Size = new System.Drawing.Size(317, 23);
+            this.txtKeyword.TabIndex = 7;
             // 
             // TableListForm
             // 
@@ -370,5 +393,7 @@
         private System.Windows.Forms.ToolStripTextBox totalCountsBox;
         private System.Windows.Forms.Button logButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.TextBox txtKeyword;
+        private System.Windows.Forms.Label label1;
     }
 }

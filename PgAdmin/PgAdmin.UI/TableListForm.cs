@@ -176,12 +176,12 @@ namespace PgAdmin.UI
                 {
                     MessageBox.Show("Please select a table", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else if (string.IsNullOrWhiteSpace(idTextBox.Text))
+                else if (string.IsNullOrWhiteSpace(idTextBox.Text) && string.IsNullOrWhiteSpace(txtKeyword.Text))
                 {
-                    MessageBox.Show("Please enter id", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("Please enter id or keyword", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    refreshDataTable();
                 }
-
-                else
+                else if (!string.IsNullOrWhiteSpace(idTextBox.Text))
                 {
                     ClientQueryService clientQueryService = new ClientQueryService();
                     var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
@@ -189,10 +189,27 @@ namespace PgAdmin.UI
                     if (result != null)
                     {
                         JObject jo = (JObject)JsonConvert.DeserializeObject(result.Data);
-                        ShowJsonForm(jo,result.Id);
+                        ShowJsonForm(jo, result.Id);
                     }
                     else
                         MessageBox.Show("Please enter valid id", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+                else if (!string.IsNullOrWhiteSpace(txtKeyword.Text))
+                {
+                    string keyword = txtKeyword.Text.Trim();
+                    System.Data.
+                    DataTable dt1 = GetDetailDocuments(TableName, DataName);
+                    DataRow[] rows =  dt1.Select(" data like  '%" + keyword + "%'");
+
+                    DataTable newdt = new DataTable();
+                    newdt = dt1.Clone(); 
+                    foreach (DataRow row in rows)  
+                    {
+                        newdt.Rows.Add(row.ItemArray);
+                    }
+
+                    DetailDataTable = newdt;
 
                 }
             }
