@@ -4,12 +4,15 @@ using System.Data;
 using System.Data.Common;
 using PgAdmin.Services.Model;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace PgAdmin.Services
 {
     public class ClientQueryService
     {
         public string ConnString = "Host=localhost;Port=5432;Username=postgres;Password=123456;Database=";
+
+        public Dictionary<string, NpgsqlConnection> NpgsqlConnections = new Dictionary<string, NpgsqlConnection>();
         public GetInfoByIdModel GetInfoById(string Id, string DataName, string TableName, CommandType cmdType, 
             params DbParameter[] cmdParms)
         {
@@ -40,7 +43,16 @@ namespace PgAdmin.Services
             params DbParameter[] cmdParms)
         {
             NpgsqlCommand cmd = new NpgsqlCommand();
-            NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+            NpgsqlConnection conn;
+            if (NpgsqlConnections.ContainsKey(connectionString))
+            {
+                conn = NpgsqlConnections[connectionString];
+            }
+            else
+            {
+                conn = new NpgsqlConnection(connectionString);
+                NpgsqlConnections.Add(connectionString, conn);
+            }
 
             try
             {

@@ -172,9 +172,14 @@ namespace PgAdmin.UI
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(DataName) || string.IsNullOrWhiteSpace(TableName))
+                //|| string.IsNullOrWhiteSpace(TableName)
+                if (string.IsNullOrWhiteSpace(DataName))
                 {
-                    MessageBox.Show("Please select a table", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Please select a DataBase", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (!string.IsNullOrWhiteSpace(txtKeyword.Text) && string.IsNullOrWhiteSpace(TableName))
+                {
+                    MessageBox.Show("Please select a Table", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (string.IsNullOrWhiteSpace(idTextBox.Text) && string.IsNullOrWhiteSpace(txtKeyword.Text))
                 {
@@ -184,15 +189,44 @@ namespace PgAdmin.UI
                 else if (!string.IsNullOrWhiteSpace(idTextBox.Text))
                 {
                     ClientQueryService clientQueryService = new ClientQueryService();
-                    var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, TableName,
-                        CommandType.Text, null);
-                    if (result != null)
+                    var sqlTableName = TableName;
+                    if (string.IsNullOrEmpty(sqlTableName))
                     {
-                        JObject jo = (JObject)JsonConvert.DeserializeObject(result.Data);
-                        ShowJsonForm(jo, result.Id);
+                        var idValuesArray = idTextBox.Text.Split('/');
+                        if (idValuesArray.Count() > 1)
+                        {
+                            var firstValueOfId = idValuesArray[0];
+                            if (firstValueOfId.EndsWith("ies"))
+                            {
+                                sqlTableName = string.Format("mt_doc_{0}", idValuesArray[0].TrimEnd(new char[3] { 'i', 'e', 's' }) + "y");
+                            }
+                            else
+                            {
+                                sqlTableName = string.Format("mt_doc_{0}", idValuesArray[0].TrimEnd('s'));
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("The given id cannot redirect to a table, Please Select a table", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
-                    else
-                        MessageBox.Show("Please enter valid id", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    try
+                    {
+                        var result = clientQueryService.GetInfoById(idTextBox.Text.Trim(), DataName, sqlTableName,
+                           CommandType.Text, null);
+                        if (result != null)
+                        {
+                            JObject jo = (JObject)JsonConvert.DeserializeObject(result.Data);
+                            ShowJsonForm(jo, result.Id);
+                        }
+                        else
+                            MessageBox.Show("Please enter valid id", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format("Error {0} occured!", ex.Message), "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                 }
                 else if (!string.IsNullOrWhiteSpace(txtKeyword.Text))
@@ -200,11 +234,11 @@ namespace PgAdmin.UI
                     string keyword = txtKeyword.Text.Trim();
                     System.Data.
                     DataTable dt1 = GetDetailDocuments(TableName, DataName);
-                    DataRow[] rows =  dt1.Select(" data like  '%" + keyword + "%'");
+                    DataRow[] rows = dt1.Select(" data like  '%" + keyword + "%'");
 
                     DataTable newdt = new DataTable();
-                    newdt = dt1.Clone(); 
-                    foreach (DataRow row in rows)  
+                    newdt = dt1.Clone();
+                    foreach (DataRow row in rows)
                     {
                         newdt.Rows.Add(row.ItemArray);
                     }

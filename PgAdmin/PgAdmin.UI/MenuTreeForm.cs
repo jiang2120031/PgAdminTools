@@ -113,12 +113,21 @@ namespace PgAdmin.UI
         
         private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Level == 1)
+            if (treeView.SelectedNode != null)
             {
-                detailDataTable = GetDetailDocuments(treeView.SelectedNode.Text, treeView.SelectedNode.Parent.Text);
-                DataName = treeView.SelectedNode.Parent.Text;
-                TableName = treeView.SelectedNode.Text;
-                updateTable();
+                if (treeView.SelectedNode.Level == 0)
+                {
+                    DataName = treeView.SelectedNode.Text;
+                    TableName = null;
+                    updateTable();
+                }
+                if (treeView.SelectedNode.Level == 1)
+                {
+                    detailDataTable = GetDetailDocuments(treeView.SelectedNode.Text, treeView.SelectedNode.Parent.Text);
+                    DataName = treeView.SelectedNode.Parent.Text;
+                    TableName = treeView.SelectedNode.Text;
+                    updateTable();
+                }
             }
         }
 
