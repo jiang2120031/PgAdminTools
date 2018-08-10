@@ -82,7 +82,7 @@ namespace PgAdmin.UI
         private void InitMenuTree()
         {
             treeView.Nodes.Clear();
-            dbTrees = GetDBDocuments(@"SELECT datname FROM pg_database order by lower(datname) ");
+            dbTrees = GetDBDocuments(getPgDatabaseSql);
             UpdateMenuTree(dbTrees);
         }
 
@@ -113,6 +113,11 @@ namespace PgAdmin.UI
         
         private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            UpdateSelectedTreeDetail();
+        }
+
+        private void UpdateSelectedTreeDetail()
+        {
             if (treeView.SelectedNode != null)
             {
                 if (treeView.SelectedNode.Level == 0)
@@ -130,7 +135,6 @@ namespace PgAdmin.UI
                 }
             }
         }
-
 
         private void databaseBox_TextChanged(object sender, EventArgs e)
         {            
@@ -160,5 +164,59 @@ namespace PgAdmin.UI
             else
                 InitMenuTree();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RefreshDatabase();
+            if (!(string.IsNullOrEmpty(TableName) || string.IsNullOrEmpty(DataName)))
+            {
+                detailDataTable = GetDetailDocuments(TableName, DataName);
+                updateTable();
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshDatabase();
+        }
+
+        private void RefreshDatabase()
+        {
+            if (this.checkBox1.Checked == true)
+            {
+                treeView.Nodes.Clear();
+                var hideDbs = ConfigurationManager.AppSettings["hideDbs"].Split(',');
+
+                StringBuilder sbSql = new StringBuilder(@"SELECT datname FROM pg_database ");
+                if (hideDbs.Count() > 0)
+                {
+                    sbSql.Append("Where");
+                    bool isNotFirstDb = false;
+                    foreach (var dbName in hideDbs)
+                    {
+                        if (isNotFirstDb)
+                        {
+                            sbSql.Append(string.Format(" And lower(datname) not Like '{0}%'", dbName.ToLower()));
+                        }
+                        else
+                        {
+                            sbSql.Append(string.Format(" lower(datname) not Like '{0}%'", dbName.ToLower()));
+                            isNotFirstDb = true;
+                        }
+                    }
+                }
+                sbSql.Append(" order by lower(datname)");
+
+                dbTrees = GetDBDocuments(sbSql.ToString());
+                UpdateMenuTree(dbTrees);
+
+            }
+            else
+            {
+                InitMenuTree();
+            }
+        }
+
+        private readonly string getPgDatabaseSql = @"SELECT datname FROM pg_database order by lower(datname) ";
     }
 }
